@@ -1,0 +1,92 @@
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class HealthScript : MonoBehaviour {
+    [SerializeField] private int MaxHP;
+    [SerializeField] private float InvulnTime;
+    [SerializeField] private AudioClip hurtNoise;
+    [SerializeField] private AudioClip deathNoise;
+    private AudioSource m_AudioSource;
+    public GameObject explosionPrefab;
+
+    private bool invuln;
+    private float curInvulnTime;
+
+    private int _currentHP;
+    public int CurrentHP
+    {
+        get
+        {
+            return _currentHP;
+        }
+        private set
+        {
+            _currentHP = value;
+        }
+    }
+
+    public string HealthString()
+    {
+        return CurrentHP + " / " + MaxHP;
+    }
+
+    public delegate void HurtDelegate();
+    public HurtDelegate onHurtDelegate;
+
+    public delegate void InvulnEndDelegate();
+    public InvulnEndDelegate onInvulnEndDelegate;
+
+    public void Damage(int amount)
+    {
+        if (invuln)
+        {
+            return;
+        }
+
+        CurrentHP -= amount;
+        m_AudioSource.PlayOneShot(hurtNoise);
+        this.GetComponent<Flash>().FlashOnce();
+        if (CurrentHP <= 0)
+        {
+            Instantiate(explosionPrefab, GetComponent<Transform>().position, Quaternion.identity);
+            Destroy(this.gameObject);
+           // m_AudioSource.PlayOneShot(deathNoise);
+            ///this.GetComponent<DestroyOnTimer>().StartTimer();
+        }
+        else
+        {
+            invuln = true;
+            curInvulnTime = InvulnTime;
+            onHurtDelegate();
+        }
+    }
+
+    private void FixedUpdate()
+    {
+        if (invuln)
+        {
+            curInvulnTime -= Time.fixedDeltaTime;
+        }
+        if(curInvulnTime <= 0)
+        {
+            invuln = false;
+            if (onInvulnEndDelegate != null)
+            {
+                onInvulnEndDelegate();
+            }
+        }
+    }
+
+    // Use this for initialization
+    void Start () {
+        CurrentHP = MaxHP;
+        m_AudioSource = this.GetComponent<AudioSource>();
+    }
+	
+	// Update is called once per frame
+	void Update () {
+		
+	}
+}
