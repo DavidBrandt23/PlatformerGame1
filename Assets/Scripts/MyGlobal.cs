@@ -5,6 +5,8 @@ using UnityEngine.Tilemaps;
 
 public class MyGlobal : MonoBehaviour
 {
+    private static string playerObjectName = "PlayerMan";
+    private static string mainCameraName = "MainCamera";
     public class RectPoints
     {
         public Vector2 topLeft;
@@ -12,7 +14,6 @@ public class MyGlobal : MonoBehaviour
         public Vector2 botLeft;
         public Vector2 botRight;
     }
-    private static string mainCameraName = "MainCamera";
     public static float tileSize = 1.0f;
     private static Vector2? noCol = null;
     public static Vector3 WorldToScreen(Vector3 worldPos)
@@ -20,6 +21,11 @@ public class MyGlobal : MonoBehaviour
         Camera mainCam = GameObject.Find(mainCameraName).GetComponent<Camera>();
         return mainCam.WorldToScreenPoint(worldPos);
         
+    }
+
+    public static GameObject GetPlayerObject()
+    {
+        return GameObject.Find(playerObjectName);
     }
 
     public static void DrawText(Vector3 worldPos, string text)

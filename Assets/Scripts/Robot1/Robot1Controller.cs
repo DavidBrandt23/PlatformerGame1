@@ -1,30 +1,17 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Robot1Controller : MonoBehaviour
+public class Robot1Controller : EnemyCommonController
 {
     [SerializeField] private float moveSpeed = 0.05f;
     [SerializeField] private float xDir = -1;
 
-    BoxCollider2D m_BoxCollider;
-    private BasicMovement m_BasicMovement;
-    private HealthScript m_HealthScript;
-    private Flash m_Flash;
-
     public GameObject bulletPrefab;
     public bool shoots;
 
-    void Start()
+    protected override void Start()
     {
-        m_BoxCollider = GetComponent<BoxCollider2D>();
-        m_BasicMovement = this.GetComponent<BasicMovement>();
-        m_HealthScript = GetComponent<HealthScript>();
-        m_HealthScript.onHurtDelegate = onHurt;
-        m_HealthScript.onInvulnEndDelegate = onInvulnEnd;
-        m_Flash = GetComponent<Flash>();
-
-        Collideable c = GetComponent<Collideable>();
-        c.onCollideDeleage = onCollide;
+        base.Start();
         if (shoots)
         {
             Shoot();
@@ -55,16 +42,7 @@ public class Robot1Controller : MonoBehaviour
             other.GetComponent<HealthScript>().Damage(1);
         }
     }
-
-    private void onHurt()
-    {
-        m_Flash.SetIsFlashing(true);
-    }
-    private void onInvulnEnd()
-    {
-        m_Flash.SetIsFlashing(false);
-    }
-
+    
     private void FixedUpdate()
     {
         m_BasicMovement.setVelocityX(xDir * moveSpeed);
