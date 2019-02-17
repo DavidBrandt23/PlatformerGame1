@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.Tilemaps;
 
 public class MyGlobal : MonoBehaviour
 {
@@ -18,6 +19,7 @@ public class MyGlobal : MonoBehaviour
     {
         Camera mainCam = GameObject.Find(mainCameraName).GetComponent<Camera>();
         return mainCam.WorldToScreenPoint(worldPos);
+        
     }
 
     public static void DrawText(Vector3 worldPos, string text)
@@ -53,7 +55,7 @@ public class MyGlobal : MonoBehaviour
             }
             if (levelMap.TileIsSolid(curX, curY))
             {
-                int slopeDir = levelMap.TileSlopeDir(curX, curY);
+                int slopeDir = levelMap.TileSlopeDir((int)curX, (int)curY);
                 if (RoundFloat(curPosm.x) != curX && slopeDir != 0)
                 {
                     //ignore slopes if x is not inside
@@ -76,14 +78,14 @@ public class MyGlobal : MonoBehaviour
         LevelMap levelMap = LevelMap.GetLevelMapObject();
         RectPoints boxColliderPoints = BoxColliderPoints(curPosm, boxCollider);
         //x
-        float realX;
+        float realX = curPosm.x; ;
         int xDir = (velocity.x > 0) ? 1 : -1;
         int? curY = null, curX = null;
         List<int> yValsToSkip = new List<int>();
         if (velocity.x == 0)
         {
             xDir = 0;
-            realX = curPosm.x;
+            //realX = curPosm.x;
         }
         else
         {
@@ -91,7 +93,7 @@ public class MyGlobal : MonoBehaviour
             float boxDesiredX = boxLeadingX + velocity.x; //pos of leading edge if move full vel
             float boxTopY = boxColliderPoints.topLeft.y;
             float boxBotY = boxColliderPoints.botLeft.y;
-
+           // if (xDir == -1) boxDesiredX += 0.5f;
             int startX = RoundFloat(curPosm.x);
             int endX = RoundFloat(boxDesiredX);
             int startY = RoundFloat(boxTopY);
@@ -107,7 +109,7 @@ public class MyGlobal : MonoBehaviour
                 {
                     if (!yValsToSkip.Contains((int)curY) && levelMap.TileIsSolid(curX, curY))
                     {
-                        if (levelMap.TileSlopeDir(curX, curY) == 0)
+                        if (levelMap.TileSlopeDir((int)curX, (int)curY) == 0)
                         {
                             //tile is flat
                             colTile = new Vector2((float)curX, (float)curY);
@@ -130,13 +132,16 @@ public class MyGlobal : MonoBehaviour
             else
             {
                // Debug.Log("xdir= " + xDir + "  col with " + colTile.Value.x + "," + colTile.Value.y);
-                realX = colTile.Value.x + (((tileSize / 2) + (boxCollider.size.x / 2.0f)) * -xDir);
+                //realX = colTile.Value.x + (((tileSize / 2) + (boxCollider.size.x / 2.0f)) * -xDir);
+                //realX = colTile.Value.x + (( (boxCollider.size.x / 2.0f)) * -xDir);
                 if (xDir == 1)
                 {
+                    realX = colTile.Value.x + (((boxCollider.size.x / 2.0f)) * -xDir);
                     realX -= 0.01f;
                 }
-                if (xDir == -1)
+                else if(xDir == -1)
                 {
+                    realX = colTile.Value.x + 1.0f + (((boxCollider.size.x / 2.0f)) * -xDir);
                     realX += 0.01f;
                 }
             }
@@ -150,7 +155,7 @@ public class MyGlobal : MonoBehaviour
 
         LevelMap levelMap = LevelMap.GetLevelMapObject();
         RectPoints boxColliderPoints = BoxColliderPoints(curPosm, boxCollider);
-
+        bool onGround = OnGround(curPosm, boxCollider);
         int yDir = (velocity.y > 0) ? 1 : -1;
         if (velocity.y == 0)
         {
@@ -158,15 +163,17 @@ public class MyGlobal : MonoBehaviour
         }
         float boxLeadingY = (yDir == -1) ? boxColliderPoints.botLeft.y : boxColliderPoints.topLeft.y;
         float boxDesiredY = boxLeadingY + velocity.y; //pos of leading edge if move full vel
+        if (onGround && yDir == -1) boxDesiredY -= 0.8f;
         float boxRightX = boxColliderPoints.topRight.x;
         float boxLeftX = boxColliderPoints.topLeft.x;
         int ystartY = RoundFloat(curPosm.y); //used to be leading
         int yendY = RoundFloat(boxDesiredY);
         int ystartX = RoundFloat(boxRightX);
         int yendX = RoundFloat(boxLeftX);
-        int? curX, curY;
-        curY = null;
-        curX = null;
+        int? curXIt, curYIt;
+        curYIt = null;
+        curXIt = null;
+        int curX, curY;
         float slopeHeightToUse = 0;
         float nonSlopeHeightToUse = 0;
         float halfPlayerHeight = (boxCollider.size.y / 2.0f);
@@ -175,11 +182,13 @@ public class MyGlobal : MonoBehaviour
         while (true)
         {
          //   Debug.Log("search tiles for ydir = " + yDir + "  y= " + ystartY + "," + yendY + ", and x" + ystartX + "," + yendX);
-            NextTileToCheck(ref curY, ref curX, ystartY, yendY, ystartX, yendX);
-            if (curY == null)
+            NextTileToCheck(ref curYIt, ref curXIt, ystartY, yendY, ystartX, yendX);
+            if (curYIt == null)
             {
                 break;
             }
+            curX = (int)curXIt;
+            curY = (int)curYIt;
 
             if (levelMap.TileIsSolid(curX, curY))
             {
@@ -191,7 +200,8 @@ public class MyGlobal : MonoBehaviour
                     //should be fine unless moving very fast
                     if (levelMap.TileSlopeDir(curX, curY) == 0)
                     {
-                        blockBottomY = (float)curY - (tileSize / 2) - 0.01f;
+                        //blockBottomY = (float)curY - (tileSize / 2) - 0.02f;
+                        blockBottomY = (float)curY - 0.02f;
                         hitBlock = true;
                         break;
                     }
@@ -400,14 +410,14 @@ public class MyGlobal : MonoBehaviour
 
     public static Vector2 GetTileForPoint(Vector2 worldPoint)
     {
-        int x = (int)(worldPoint.x + 0.5f);
-        int y = (int)(worldPoint.y + 0.5f);
+        int x = (int)(worldPoint.x);//was +.5
+        int y = (int)(worldPoint.y);
         return new Vector2(x, y);
     }
 
     private static int RoundFloat(float num)
     {
-        return (int)(num + 0.5f);
+        return (int)(num + 0.0f);//was .5
     }
 
     // Use this for initialization

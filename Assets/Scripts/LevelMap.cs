@@ -1,157 +1,108 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class LevelMap : MonoBehaviour {
-    private List<List<GameObject>> map;
+
     // Don't use Tile class outside of LevelMap
     private const string tileTag = "Tile";
-    private const string LevelMapObjectTag = "LevelMapObjectTag";
-    private const int maxSize = 2000;
+    private const string tileMapTag = "TileMap1";
+    private Tilemap tileMap;
     public static LevelMap GetLevelMapObject()
     {
         return GameObject.Find("LevelMapObjectTag").GetComponent<LevelMap>();
     }
 
-    void Start () {
-        initializeMap();
-    }
-    private void initializeMap()
+    void Start ()
     {
-        map = new List<List<GameObject>>(maxSize);
-
-        for(int i = 0; i < maxSize; i++)
-        {
-            map.Add(new List<GameObject>());
-            for (int j = 0; j < maxSize; j++)
-            {
-                map[i].Add(null);
-            }
-        }
-        GameObject[] TileObjects = GameObject.FindGameObjectsWithTag(tileTag);
-
-        foreach (GameObject obj in TileObjects)
-        {
-            float objX = obj.transform.position.x;
-            float objY = obj.transform.position.y;
-            
-            int tileX = (int)objX;
-            int tileY = (int)objY;
-            if((float)tileX != objX || (float)tileY != objY)
-            {
-                Debug.LogError("TileObject invalid position: " + obj.name + " " + objX + "," + objY);
-            }
-            
-            map[tileX][tileY] = obj;
-        }
+        tileMap = GameObject.Find(tileMapTag).GetComponent<Tilemap>();
     }
+
     public bool TileIsSolid(int? x, int? y)
     {
-        GameObject tile = getTile(x, y);
-        if(tile == null)
+        if (x==null || y== null)
         {
             return false;
         }
-        Tile tileScript = tile.GetComponent<Tile>();
-        if (!tileScript.IsSolid)
+        if(tileMap.GetTile(new Vector3Int((int)x, (int)y, 0))!=null)
         {
-            return false;
+            Debug.Log(x + " " + y + " is n  null");
+            return true;
         }
-        return true;
+        return false;
     }
 
-    public bool TileIsBelowSlope(int? x, int? y)
+    public bool TileIsBelowSlope(int x, int y)
     {
-        GameObject tile = getTile(x, y);
-        if (tile == null)
-        {
-            return false;
-        }
-        GameObject aboveTile = getTile(x, y+1);
-        if (aboveTile == null)
-        {
-            return false;
-        }
-        Tile aboveTileScript = aboveTile.GetComponent<Tile>();
-        return aboveTileScript.LeftY != aboveTileScript.RightY;
+        return TileSlopeDir(x, y + 1) != 0;
     }
 
-    public float getTileTop(int? x, int? y, float worldX)
+    public float getTileTop(int x, int y, float worldX)
     {
         ///get worldY of top of tile at certain x
         float tileSize = 1.0f;
-        GameObject tile = getTile(x, y);
-        if (tile == null)
+        LevelTile tile = null;
+        if (getTile(x, y, ref tile))
         {
-            return 0;
-        }
-        Tile colTileY = tile.GetComponent<Tile>();
-        float halfTileHeight = (tileSize / 2);
-        float tileLeftX = (float)x - halfTileHeight;
+            float halfTileHeight = (tileSize / 2);
+            float tileLeftX = (float)x;
 
-        float t = (worldX - tileLeftX) / tileSize;
-        float floorY = (1 - t) * TileLeftY(x,y) + t * TileRightY(x, y); //relative from bot of tile
-        floorY = floorY / 32.0f;
-        floorY = Mathf.Clamp(floorY, 0.0f, 1.0f);
- 
-        float slopeHeightAtPlayerMid = ((float)y - halfTileHeight + floorY);
-        return slopeHeightAtPlayerMid;
-    }
+            float t = (worldX - tileLeftX) / tileSize;
+            float floorY = (1 - t) * TileLeftY(x, y) + t * TileRightY(x, y); //relative from bot of tile
+            floorY = Mathf.Clamp(floorY, 0.0f, 1.0f);
 
-    public int TileSlopeDir(int? x, int? y)
-    {
-
-        GameObject tile = getTile(x, y);
-        if (tile == null)
-        {
-            return 0;
-        }
-        Tile tileScript = tile.GetComponent<Tile>();
-        int tileLeftY = tileScript.LeftY;
-        int tileRightY = tileScript.RightY;
-        if (tileLeftY > tileRightY)
-        {
-            return -1;
-        }
-        if (tileLeftY<tileRightY)
-        {
-            return 1;
+            float slopeHeightAtPlayerMid = ((float)y + floorY);
+            return slopeHeightAtPlayerMid;
         }
         return 0;
     }
 
-    public int TileLeftY(int? x, int? y)
+    public int TileSlopeDir(int x, int y)
     {
-        GameObject tile = getTile(x, y);
-        if (tile == null)
+        LevelTile tile = null;
+        if (getTile(x, y, ref tile))
         {
+            float tileLeftY = tile.leftY;
+            float tileRightY = tile.rightY;
+            if (tileLeftY > tileRightY)
+            {
+                return -1;
+            }
+            if (tileLeftY < tileRightY)
+            {
+                return 1;
+            }
             return 0;
         }
-        Tile tileScript = tile.GetComponent<Tile>();
-        return tileScript.LeftY;
+        return 0;
     }
 
-    public int TileRightY(int? x, int? y)
+    public float TileLeftY(int x, int y)
     {
-        GameObject tile = getTile(x, y);
-        if (tile == null)
+        LevelTile tile = null;
+        if (getTile(x, y, ref tile))
         {
-            return 0;
+            return tile.leftY;
         }
-        Tile tileScript = tile.GetComponent<Tile>();
-        return tileScript.RightY;
+        return 0;
+    }
+
+    public float TileRightY(int x, int y)
+    {
+        LevelTile tile = null;
+        if (getTile(x, y, ref tile))
+        {
+            return tile.rightY;
+        }
+        return 0;
     }
 
 
-    private GameObject getTile(int? x, int? y)
+    private bool getTile(int x, int y, ref LevelTile tile)
     {
-
-        if(x==null || y == null || x < 0 || y < 0|| x >= maxSize || y >= maxSize)
-        {
-            return null;
-        }
-        GameObject tile = map[(int)x][(int)y];
-        return tile;
+        tile = (LevelTile)tileMap.GetTile(new Vector3Int((int)x, (int)y, 0));
+        return tile != null;
     }
 
     private void OnGUI()
