@@ -19,6 +19,7 @@ public class PlayerController : MonoBehaviour
     private bool m_FacingRight = true;
     private bool isStunned = false;
     private bool isAttacking = false;
+   // private bool shooting = false;
 
     //should maybe be Damagable or something
 
@@ -62,9 +63,26 @@ public class PlayerController : MonoBehaviour
         PlayerShoot ShootScript = this.GetComponent<PlayerShoot>();
         if (ShootScript.TryShoot(m_FacingRight))
         {
-
-            m_Anim.SetTrigger("Punch");
+            float cooldownTime = 0.3f;
+            AnimatorStateInfo animationState = m_Anim.GetCurrentAnimatorStateInfo(0);
+            m_Anim.SetFloat("RunAnimPos", animationState.normalizedTime);
+           // Debug.Log("normtime" + animationState.normalizedTime);
+            m_Anim.SetLayerWeight(0, 0.0f);
+            m_Anim.SetLayerWeight(1, 1.0f);
+            //m_Anim.s
+            m_Anim.SetBool("IsShooting", true);
+            Invoke("shootEnd", cooldownTime);
         }
+    }
+
+    private void shootEnd()
+    {
+        AnimatorStateInfo animationState = m_Anim.GetCurrentAnimatorStateInfo(0);
+        m_Anim.SetFloat("RunAnimPos", animationState.normalizedTime);
+     //   Debug.Log("ENDnormtime" + animationState.normalizedTime);
+        m_Anim.SetLayerWeight(0, 1.0f);
+        m_Anim.SetLayerWeight(1, 0.0f);
+        m_Anim.SetBool("IsShooting",false);
     }
 
 
@@ -103,7 +121,12 @@ public class PlayerController : MonoBehaviour
 
         m_Anim.SetBool("OnGround", m_Grounded);
         m_Anim.SetFloat("XSpeed", Mathf.Abs(speed));
-        m_Anim.SetFloat("YVelocity", m_BasicMovement.GetVelocity().y);
+        float animYSpeed = Mathf.Abs(m_BasicMovement.GetVelocity().y);
+        if (m_Grounded)
+        {
+            animYSpeed = 0;
+        }
+        m_Anim.SetFloat("YSpeed", animYSpeed);
         m_Anim.SetFloat("RunAnimSpeed", Mathf.Abs(speed) * 10);
 
 

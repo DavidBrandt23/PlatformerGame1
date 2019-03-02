@@ -28,6 +28,7 @@ namespace UnityEngine.Tilemaps
             //    tileData.colliderType = m_TileColliderType;
             //}
         }
+ 
 
 #if UNITY_EDITOR
         [MenuItem("Assets/Create/DABLevel Tile")]

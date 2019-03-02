@@ -1,13 +1,12 @@
 fileFormatVersion: 2
-guid: 9b95ed44c377b9a42abeae0b1448010d
+guid: 1fb61f6f090a1e147a04e4c3bb38bc12
 TextureImporter:
   fileIDToRecycleName:
-    21300000: GreenMan1_0
-    21300002: GreenMan1_1
-    21300004: GreenMan1_2
-    21300006: GreenMan1_3
-    21300008: GreenMan1_4
-    21300010: GreenMan1_5
+    21300000: Zombie1_0
+    21300002: Zombie1_1
+    21300004: Zombie1_2
+    21300006: Zombie1_3
+    21300008: Zombie1_4
   externalObjects: {}
   serializedVersion: 9
   mipmaps:
@@ -51,7 +50,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 32
+  spritePixelsToUnits: 16
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -90,7 +89,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: GreenMan1_0
+      name: Zombie1_0
       rect:
         serializedVersion: 2
         x: 0
@@ -104,13 +103,13 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8f2d047013fb6f74ab7e6920bf02c1b5
+      spriteID: 3c8981d2334153d44ae87a5b0e2fcf82
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: GreenMan1_1
+      name: Zombie1_1
       rect:
         serializedVersion: 2
         x: 32
@@ -124,13 +123,13 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d8d6781dd1c6ae343b52d6332a88861d
+      spriteID: 6ab8bfa0a9d68964394adc1b944fb91c
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: GreenMan1_2
+      name: Zombie1_2
       rect:
         serializedVersion: 2
         x: 64
@@ -144,13 +143,13 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8df978012bae6124e80b234c44768fd0
+      spriteID: e12bfd3964f91ef418ad529f481215d2
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: GreenMan1_3
+      name: Zombie1_3
       rect:
         serializedVersion: 2
         x: 96
@@ -164,13 +163,13 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 070c3baf0a011664c976e9f52d5a06b7
+      spriteID: cdf5e9cd368adf144bd5861e4f974c03
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: GreenMan1_4
+      name: Zombie1_4
       rect:
         serializedVersion: 2
         x: 128
@@ -184,27 +183,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 649a639634b2d164192fe6c3b63db830
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: GreenMan1_5
-      rect:
-        serializedVersion: 2
-        x: 160
-        y: 0
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 88de3932730e27c4f94a99d31f381fa8
+      spriteID: 5043a1fb9934bdc46bb131f0c5cb3f22
       vertices: []
       indices: 
       edges: []
@@ -212,7 +191,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 3652385fa06ecfb46af28f26e3fb5807
+    spriteID: db0af3bafeb76c24da18b11fdb2686d8
     vertices: []
     indices: 
     edges: []

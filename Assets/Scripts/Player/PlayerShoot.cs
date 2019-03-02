@@ -32,7 +32,15 @@ public class PlayerShoot : MonoBehaviour
         {
             return false;
         }
-        Vector3 bulletPos = new Vector3(transform.position.x, transform.position.y + 0.4f, transform.position.z);
+        float bulletStartY = transform.position.y + 0.35f;
+        float bulletStartX = transform.position.x;
+        float xOffset = 0.6f;
+        if(!right)
+        {
+            xOffset *= -1;
+        }
+        bulletStartX += xOffset;
+        Vector3 bulletPos = new Vector3(bulletStartX, bulletStartY, transform.position.z);
 
         Vector3 direction = new Vector3(-1, 0, 0);
         if (right)

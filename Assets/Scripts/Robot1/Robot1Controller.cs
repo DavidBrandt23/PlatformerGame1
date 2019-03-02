@@ -45,7 +45,18 @@ public class Robot1Controller : EnemyCommonController
     
     private void FixedUpdate()
     {
-        m_BasicMovement.setVelocityX(xDir * moveSpeed);
+        Animator m_Anim = GetComponent<Animator>();
+        AnimatorStateInfo animationState = m_Anim.GetCurrentAnimatorStateInfo(0);
+        float pos = animationState.normalizedTime;
+        pos = pos - (int)pos;
+        float curSpeed = moveSpeed;
+        Debug.Log("pos=" + pos);
+        if (pos > 0.4f && pos < 0.8f)
+        {
+            curSpeed = 0;
+        }
+        float xVelocity = xDir * curSpeed;
+        m_BasicMovement.setVelocityX(xVelocity);
 
         bool hitTileX = false, hitTileY = false;
         m_BasicMovement.Move(ref hitTileX, ref hitTileY);
@@ -54,5 +65,10 @@ public class Robot1Controller : EnemyCommonController
         {
             xDir = xDir * -1;
         }
+
+        // Multiply the player's x local scale by -1.
+        Vector3 theScale = transform.localScale;
+        theScale.x = xDir;
+        transform.localScale = theScale;
     }
 }

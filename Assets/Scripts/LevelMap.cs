@@ -27,7 +27,7 @@ public class LevelMap : MonoBehaviour {
         }
         if(tileMap.GetTile(new Vector3Int((int)x, (int)y, 0))!=null)
         {
-            Debug.Log(x + " " + y + " is n  null");
+            //Debug.Log(x + " " + y + " is n  null");
             return true;
         }
         return false;
@@ -101,7 +101,17 @@ public class LevelMap : MonoBehaviour {
 
     private bool getTile(int x, int y, ref LevelTile tile)
     {
-        tile = (LevelTile)tileMap.GetTile(new Vector3Int((int)x, (int)y, 0));
+        TileBase baseTile = tileMap.GetTile(new Vector3Int((int)x, (int)y, 0));
+        if(baseTile == null)
+        {
+            tile = null;
+            return false;
+        }
+        if(baseTile.GetType() != typeof(LevelTile)){
+            tile = null;
+            return false;
+        }
+        tile = (LevelTile)baseTile;
         return tile != null;
     }
 
