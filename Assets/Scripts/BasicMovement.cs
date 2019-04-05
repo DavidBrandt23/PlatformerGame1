@@ -15,10 +15,20 @@ public class BasicMovement : MonoBehaviour
     private Transform m_Transform;
     private BoxCollider2D m_BoxCollider;
 
+
+    public bool OnGround()
+    {
+        return MyGlobal.OnGround(m_Transform.position, m_BoxCollider);
+    }
     private void Start()
     {
         m_BoxCollider = GetComponent<BoxCollider2D>();
         m_Transform = GetComponent<Transform>();
+        DetectMovingPlat movingPlatScript = GetComponent<DetectMovingPlat>();
+        if(movingPlatScript == null)
+        {
+            gameObject.AddComponent<DetectMovingPlat>();
+        }
     }
     public void setVelocityX(float x)
     {
@@ -37,12 +47,38 @@ public class BasicMovement : MonoBehaviour
     }
 
     //should be called by control scripts FixedUpdate
-    public void Move(ref bool hitTileX, ref bool hitTileY)
+    public void Move(ref bool hitTileX, ref bool hitTileY, bool wasOnGround = false)
     {
         velocity.y += GravityAccel;
 
         if (velocity.y < YMaxSpeed) velocity.y = YMaxSpeed;
-        velocity = new Vector2(velocity.x, velocity.y);
-        m_Transform.position = MyGlobal.GetValidPosition(m_Transform.position, m_BoxCollider, velocity, ref hitTileX, ref hitTileY);
+        Vector2 moveVel = velocity;
+        if (wasOnGround)
+        {
+           // moveVel.y -= 0.3f;
+        }
+        DetectMovingPlat detectMovingPlat = GetComponent<DetectMovingPlat>();
+        if(detectMovingPlat != null)
+        {
+            GameObject movePlat = detectMovingPlat.getTouchedPlat();
+            if(movePlat != null)
+            {
+                MovingPlatform movePlatScript = movePlat.GetComponent<MovingPlatform>();
+                if(movePlatScript != null)
+                {
+                    m_Transform.position += movePlatScript.GetVelocity();
+                }
+            }
+        }
+        m_Transform.position = MyGlobal.GetValidPosition(m_Transform.position, m_BoxCollider, moveVel, ref hitTileX, ref hitTileY, wasOnGround);
+        bool onGround = OnGround();
+        if (!wasOnGround && onGround && velocity.y < -0.05f)
+        {
+            GetComponent<AudioSource>().PlayOneShot(thudNoise, 0.05f);
+        }
+        if (onGround)
+        {
+            setVelocityY(0);
+        }
     }
 }

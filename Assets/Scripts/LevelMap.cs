@@ -14,7 +14,7 @@ public class LevelMap : MonoBehaviour {
         return GameObject.Find("LevelMapObjectTag").GetComponent<LevelMap>();
     }
 
-    void Start ()
+    public void onLoadLevel()
     {
         tileMap = GameObject.Find(tileMapTag).GetComponent<Tilemap>();
     }
@@ -25,6 +25,7 @@ public class LevelMap : MonoBehaviour {
         {
             return false;
         }
+        if (tileMap == null) return false;
         if(tileMap.GetTile(new Vector3Int((int)x, (int)y, 0))!=null)
         {
             //Debug.Log(x + " " + y + " is n  null");

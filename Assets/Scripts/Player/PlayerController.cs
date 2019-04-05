@@ -19,7 +19,11 @@ public class PlayerController : MonoBehaviour
     private bool m_FacingRight = true;
     private bool isStunned = false;
     private bool isAttacking = false;
-   // private bool shooting = false;
+    private bool isJumpingUp = false;
+    private const float maxJumpTime = 13.0f;
+    private float curJumpTime = 0.0f;
+    private bool canJumpAgain = true;
+    // private bool shooting = false;
 
     //should maybe be Damagable or something
 
@@ -34,6 +38,7 @@ public class PlayerController : MonoBehaviour
         m_HealthScript = GetComponent<HealthScript>();
         m_HealthScript.onHurtDelegate = onHurt;
         m_HealthScript.onInvulnEndDelegate = onInvulnEnd;
+        m_HealthScript.onDeathDelegate = onDeath;
         m_Flash = GetComponent<Flash>();
         
 
@@ -45,7 +50,13 @@ public class PlayerController : MonoBehaviour
         m_Flash.SetIsFlashing(true);
        // isStunned = true;
     }
-
+    private void onDeath()
+    {
+        this.gameObject.SetActive(false);
+        this.enabled = false;
+        this.GetComponent<SpriteRenderer>().enabled = false;
+        FindObjectOfType<GameController>().OnPlayerDeath();
+    }
     private void onInvulnEnd()
     {
         m_Flash.SetIsFlashing(false);
@@ -84,10 +95,8 @@ public class PlayerController : MonoBehaviour
         m_Anim.SetLayerWeight(1, 0.0f);
         m_Anim.SetBool("IsShooting",false);
     }
-
-
     //should be called by PlayerInput.FixedUpdate
-    public void Move(float xMoveDir, bool crouch, bool jump, bool boosting)
+    public void Move(float xMoveDir, bool crouch, bool jumpPressed, bool boosting)
     {
         crouch = false;
 
@@ -112,14 +121,12 @@ public class PlayerController : MonoBehaviour
             m_BasicMovement.setVelocityX(0);
 
         }
-        m_BasicMovement.Move(ref hitTileX, ref hitTileY);
-
-       // if (hitTileY && velocity.y < -0.2f)
-       // {
-           // m_AudioSource.PlayOneShot(thudNoise, 0.3f);
-        //}
+        bool wasOnGround = m_Grounded && !jumpPressed;
+        m_BasicMovement.Move(ref hitTileX, ref hitTileY, wasOnGround);
+        m_Grounded=m_BasicMovement.OnGround();
 
         m_Anim.SetBool("OnGround", m_Grounded);
+        //Debug.Log(m_Grounded);
         m_Anim.SetFloat("XSpeed", Mathf.Abs(speed));
         float animYSpeed = Mathf.Abs(m_BasicMovement.GetVelocity().y);
         if (m_Grounded)
@@ -130,14 +137,32 @@ public class PlayerController : MonoBehaviour
         m_Anim.SetFloat("RunAnimSpeed", Mathf.Abs(speed) * 10);
 
 
-        m_Grounded = MyGlobal.OnGround(m_Transform.position, m_BoxCollider);
-        if (m_Grounded)
+        if(m_Grounded && !jumpPressed)
         {
-            m_BasicMovement.setVelocityY(0);
+            canJumpAgain = true;
         }
-        if (m_Grounded && jump)
+        if (m_Grounded && jumpPressed && !isJumpingUp && canJumpAgain)
+        {
+            isJumpingUp = true;
+            curJumpTime = 0;
+            canJumpAgain = false;
+        }
+        if (isJumpingUp)
         {
             m_BasicMovement.setVelocityY(m_JumpVelocity);
+            curJumpTime += 1.0f;
+            if(curJumpTime > maxJumpTime)
+            {
+                isJumpingUp = false;
+            }
+        }
+        if(isJumpingUp && !jumpPressed)
+        {
+            isJumpingUp = false;
+        }
+        if (!isJumpingUp && m_BasicMovement.GetVelocity().y > 0)
+        {
+            m_BasicMovement.setVelocityY(0);
         }
     }
 

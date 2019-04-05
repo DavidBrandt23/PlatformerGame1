@@ -28,9 +28,8 @@ public class Robot1Controller : EnemyCommonController
         {
             direction = new Vector3(1, 0, 0);
         }
-        GameObject newBullet = Instantiate(bulletPrefab, bulletPos, Quaternion.identity);
+        GameObject newBullet = MyGlobal.AddEntityToScene(bulletPrefab, bulletPos);
         newBullet.GetComponent<BulletMove>().direction = direction;
-        newBullet.transform.parent = GameObject.Find("Entities").transform;
        // m_AudioSource.PlayOneShot(shootNoise);
         Invoke("Shoot", 3.0f);
     }
@@ -50,7 +49,7 @@ public class Robot1Controller : EnemyCommonController
         float pos = animationState.normalizedTime;
         pos = pos - (int)pos;
         float curSpeed = moveSpeed;
-        Debug.Log("pos=" + pos);
+        //Debug.Log("pos=" + pos);
         if (pos > 0.4f && pos < 0.8f)
         {
             curSpeed = 0;
@@ -66,7 +65,7 @@ public class Robot1Controller : EnemyCommonController
             xDir = xDir * -1;
         }
 
-        // Multiply the player's x local scale by -1.
+        //flip sprite to face move direction
         Vector3 theScale = transform.localScale;
         theScale.x = xDir;
         transform.localScale = theScale;

@@ -16,8 +16,17 @@ public class EnemyCommonController : MonoBehaviour
         m_HealthScript.onHurtDelegate += onHurt;
         m_HealthScript.onInvulnEndDelegate += onInvulnEnd;
         m_Flash = GetComponent<Flash>();
+        if(m_Flash == null)
+        {
+            m_Flash=gameObject.AddComponent<Flash>();
+        }
 
         Collideable c = GetComponent<Collideable>();
+        if (c == null)
+        {
+            c = gameObject.AddComponent<Collideable>();
+        }
+
         c.onCollideDeleage = onCollide;
     }
     

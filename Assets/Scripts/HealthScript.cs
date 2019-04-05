@@ -34,10 +34,19 @@ public class HealthScript : MonoBehaviour {
 
     public delegate void HurtDelegate();
     public HurtDelegate onHurtDelegate;
+    public delegate void DeathDelegate();
+    public HurtDelegate onDeathDelegate;
 
     public delegate void InvulnEndDelegate();
     public InvulnEndDelegate onInvulnEndDelegate;
-
+    public void Heal(int amount)
+    {
+        CurrentHP += amount;
+        if(CurrentHP > MaxHP)
+        {
+            CurrentHP = MaxHP;
+        }
+    }
     public void Damage(int amount)
     {
         if (invuln)
@@ -50,8 +59,16 @@ public class HealthScript : MonoBehaviour {
         this.GetComponent<Flash>().FlashOnce();
         if (CurrentHP <= 0)
         {
-            Instantiate(explosionPrefab, GetComponent<Transform>().position, Quaternion.identity);
-            Destroy(this.gameObject);
+            if (onDeathDelegate == null)
+            {
+                Instantiate(explosionPrefab, GetComponent<Transform>().position, Quaternion.identity);
+                Destroy(this.gameObject);
+            }
+            else
+            {
+                Instantiate(explosionPrefab, GetComponent<Transform>().position, Quaternion.identity);
+                onDeathDelegate();
+            }
            // m_AudioSource.PlayOneShot(deathNoise);
             ///this.GetComponent<DestroyOnTimer>().StartTimer();
         }

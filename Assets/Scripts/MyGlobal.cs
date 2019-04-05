@@ -13,7 +13,14 @@ public class MyGlobal : MonoBehaviour
         public Vector2 topRight;
         public Vector2 botLeft;
         public Vector2 botRight;
+        public float top;
+        public float bottom;
+        public float left;
+        public float right;
+        public float width;
+        public float height;
     }
+
     public static float tileSize = 1.0f;
     private static Vector2? noCol = null;
     public static Vector3 WorldToScreen(Vector3 worldPos)
@@ -23,23 +30,66 @@ public class MyGlobal : MonoBehaviour
         
     }
 
+    public static GameObject AddEntityToScene(GameObject prefab, Vector3 position)
+    {
+        GameObject newBullet = Instantiate(prefab, position, Quaternion.identity);
+        newBullet.transform.parent = GameObject.Find("Entities").transform;
+        return newBullet;
+    }
+    public static bool ColliderOnCamera(GameObject obj)
+    {
+        BoxCollider2D boxCollider = obj.GetComponent<BoxCollider2D>();
+        Vector3 position = obj.GetComponent<Transform>().position;
+        Vector2 curPosm = new Vector2(position.x, position.y);
+
+        RectPoints RP = BoxColliderPoints(curPosm, boxCollider);
+        float worldScreenLeft = 1.0f;
+        float worldScreenRight = 1.0f;
+        if ((RP.left < worldScreenRight && RP.right > worldScreenLeft) || 
+            (RP.left < worldScreenRight && RP.right > worldScreenLeft))
+        {
+            return true;
+        }
+        return false;
+    }
+
     public static GameObject GetPlayerObject()
     {
         return GameObject.Find(playerObjectName);
     }
-
+    public static GameObject GetGameControllerObject()
+    {
+        return GameObject.Find("GameController");
+    }
+    public static void PlayGlobalSound(AudioClip clip)
+    {
+        GameObject controller = GameObject.Find("GameController");
+        controller.GetComponent<AudioSource>().PlayOneShot(clip);
+    }
     public static void DrawText(Vector3 worldPos, string text)
     {
         Vector3 screenPos = WorldToScreen(worldPos);
         GUI.Label(new Rect(screenPos.x, screenPos.y, 33, 33), text);
     }
-
+    public static bool OnGroundObj(GameObject o, ref GameObject touchedPlat)
+    {
+        Vector3 position = o.GetComponent<Transform>().position;
+        Vector2 pos = new Vector2(position.x, position.y);
+        BoxCollider2D box = o.GetComponent<BoxCollider2D>();
+        return OnGround(pos, box, ref touchedPlat);
+    }
     public static bool OnGround(Vector2 curPosm, BoxCollider2D boxCollider)
+    {
+        GameObject plat = new GameObject();
+        return OnGround(curPosm, boxCollider, ref plat);
+    }
+    public static bool OnGround(Vector2 curPosm, BoxCollider2D boxCollider, ref GameObject touchedPlat)
     {
         RectPoints boxColliderPoints = BoxColliderPoints(curPosm, boxCollider);
         int yDir = -1;
+        float searchDistance = 0.03f;
         float boxLeadingY = (yDir == -1) ? boxColliderPoints.botLeft.y : boxColliderPoints.topLeft.y;
-        float boxDesiredY = boxLeadingY - 0.05f; //pos of leading edge if move full vel was .03
+        float boxDesiredY = boxLeadingY - searchDistance; //pos of leading edge if move full vel was .03
         float boxRightX = boxColliderPoints.botRight.x;
         float boxLeftX = boxColliderPoints.botLeft.x;
         int startY = RoundFloat(boxLeadingY);
@@ -52,6 +102,8 @@ public class MyGlobal : MonoBehaviour
         curY = null;
         curX = null;
         LevelMap levelMap = LevelMap.GetLevelMapObject();
+
+        //check level tiles
         while (true)
         {
             NextTileToCheck(ref curY, ref curX, startY, endY, startX, endX);
@@ -69,29 +121,66 @@ public class MyGlobal : MonoBehaviour
                 }
                 colTileY = new Vector2((float)curX, (float)curY);
                 float slopeHeightAtPlayerMid = levelMap.getTileTop((int)colTileY.Value.x, (int)colTileY.Value.y, curPosm.x);
+
                 if(boxDesiredY <= slopeHeightAtPlayerMid)
                 {
                     return true;
-
                 }
             }
         }
+
+        //check other blocks  
+
+        if (true)
+        {
+            foreach(GameObject block in GetBlocks())
+            {
+                BoxCollider2D blockCollider = block.GetComponent<BoxCollider2D>();
+                RectPoints blockPoints = BoxColliderPoints(block.transform.position, blockCollider);
+                bool aboveBlock = curPosm.y > block.transform.position.y;
+                bool belowBlock = curPosm.y < block.transform.position.y;
+                bool horizontalWithBlock = (boxColliderPoints.left < blockPoints.right) && (boxColliderPoints.right > blockPoints.left);
+                if (horizontalWithBlock)
+                {
+                    bool willBePastTopSide = boxDesiredY < blockPoints.top;
+                    if (willBePastTopSide && aboveBlock)
+                    {
+                        touchedPlat = block;
+                        return true;
+                    }
+                }
+            }
+        }
+
         return false;
+    }
+
+    private static List<GameObject> GetBlocks()
+    {
+
+        GameObject blockHolder = GameObject.Find("Blocks");
+        Transform[] childTransforms = blockHolder.GetComponentsInChildren<Transform>();
+        List<GameObject> children = new List<GameObject>();
+        foreach (Transform t in blockHolder.transform)
+        {
+            children.Add(t.gameObject);
+        }
+        return children;
     }
 
     private static float GetNewX(Vector2 curPosm, BoxCollider2D boxCollider, Vector2 velocity, ref bool hitTile)
     {
         LevelMap levelMap = LevelMap.GetLevelMapObject();
         RectPoints boxColliderPoints = BoxColliderPoints(curPosm, boxCollider);
-        //x
-        float realX = curPosm.x; ;
+        float halfPlayerWidth = boxColliderPoints.width / 2.0f;
+        float realX = curPosm.x;
+        float realLeadingEdgeX = 0;
         int xDir = (velocity.x > 0) ? 1 : -1;
         int? curY = null, curX = null;
         List<int> yValsToSkip = new List<int>();
         if (velocity.x == 0)
         {
             xDir = 0;
-            //realX = curPosm.x;
         }
         else
         {
@@ -130,48 +219,81 @@ public class MyGlobal : MonoBehaviour
                     }
                 }
             }
-            if (colTile == noCol)
+            float extraSpace = 0.01f;
+            if(hitTile)
             {
-                realX = curPosm.x + velocity.x;
-               // Debug.Log("xdir= " + xDir + "  no x col");
-            }
-            else
-            {
-               // Debug.Log("xdir= " + xDir + "  col with " + colTile.Value.x + "," + colTile.Value.y);
-                //realX = colTile.Value.x + (((tileSize / 2) + (boxCollider.size.x / 2.0f)) * -xDir);
-                //realX = colTile.Value.x + (( (boxCollider.size.x / 2.0f)) * -xDir);
                 if (xDir == 1)
                 {
-                    realX = colTile.Value.x + (((boxCollider.size.x / 2.0f)) * -xDir);
-                    realX -= 0.01f;
+                    realLeadingEdgeX = colTile.Value.x;
+                    realLeadingEdgeX -= extraSpace;
                 }
                 else if(xDir == -1)
                 {
-                    realX = colTile.Value.x + 1.0f + (((boxCollider.size.x / 2.0f)) * -xDir);
-                    realX += 0.01f;
+                    realLeadingEdgeX = colTile.Value.x + 1.0f;
+                    realLeadingEdgeX += extraSpace;
                 }
             }
-            
+
+            //check with blocks
+            if (!hitTile)
+            {
+                foreach (GameObject block in GetBlocks())
+                {
+                    BoxCollider2D blockCollider = block.GetComponent<BoxCollider2D>();
+                    RectPoints blockPoints = BoxColliderPoints(block.transform.position, blockCollider);
+                    bool rightOfBlock = curPosm.x > block.transform.position.x;
+                    bool leftOfBlock = curPosm.x < block.transform.position.x;
+                    bool verticalWithBlock = (boxColliderPoints.top > blockPoints.bottom) && (boxColliderPoints.bottom < blockPoints.top);
+                    if (verticalWithBlock)
+                    {
+                        if (xDir == -1 && rightOfBlock)
+                        {
+                            bool willBePastRightSide = boxDesiredX < blockPoints.right;
+                            if (willBePastRightSide)
+                            {
+                                realLeadingEdgeX = blockPoints.right + extraSpace;
+                                hitTile = true;
+                            }
+                        }
+                        else if (xDir == 1 && leftOfBlock)
+                        {
+                            bool willBePastLeftSide = boxDesiredX > blockPoints.left;
+                            if (willBePastLeftSide)
+                            {
+                                realLeadingEdgeX = blockPoints.left - extraSpace;
+                                hitTile = true;
+                            }
+                        }
+                    }
+                }
+             }
+        }
+        if (hitTile)
+        {
+            realX = realLeadingEdgeX + -xDir * halfPlayerWidth;
+        }
+        else
+        {
+            realX = curPosm.x + velocity.x;
         }
         return realX;
     }
 
-    private static float GetNewY(Vector2 curPosm, BoxCollider2D boxCollider, Vector2 velocity, ref bool hitTile)
+    private static float GetNewY(Vector2 curPosm, BoxCollider2D boxCollider, Vector2 velocity, ref bool hitTile, bool wasOnGround = false)
     {
-
         LevelMap levelMap = LevelMap.GetLevelMapObject();
         RectPoints boxColliderPoints = BoxColliderPoints(curPosm, boxCollider);
         bool onGround = OnGround(curPosm, boxCollider);
         int yDir = (velocity.y > 0) ? 1 : -1;
         if (velocity.y == 0)
         {
-            yDir = 0;
+            yDir = -1;
         }
-        float boxLeadingY = (yDir == -1) ? boxColliderPoints.botLeft.y : boxColliderPoints.topLeft.y;
+        float boxLeadingY = (yDir == -1) ? boxColliderPoints.bottom : boxColliderPoints.top;
         float boxDesiredY = boxLeadingY + velocity.y; //pos of leading edge if move full vel
-        if (onGround && yDir == -1) boxDesiredY -= 0.8f;
-        float boxRightX = boxColliderPoints.topRight.x;
-        float boxLeftX = boxColliderPoints.topLeft.x;
+        if (wasOnGround) boxDesiredY -= 0.2f;
+        float boxRightX = boxColliderPoints.right;
+        float boxLeftX = boxColliderPoints.left;
         int ystartY = RoundFloat(curPosm.y); //used to be leading
         int yendY = RoundFloat(boxDesiredY);
         int ystartX = RoundFloat(boxRightX);
@@ -214,7 +336,8 @@ public class MyGlobal : MonoBehaviour
                 }
                 else // 0 or -1
                 {
-                    float playerBotMidY = curPosm.y - (halfPlayerHeight) + velocity.y - 0.03f ;
+                    float playerBotMidY = curPosm.y - (halfPlayerHeight) + velocity.y - 0.01f ; //was .03
+                    if (wasOnGround) playerBotMidY -= 0.2f;
                     float slopeHeightAtPlayerMid = levelMap.getTileTop(curX, curY, curPosm.x);
                    // Debug.Log("ydir= " + yDir + "  col with " + curX + "," + curY + " slopeHeightAtPlayerMid=" + slopeHeightAtPlayerMid + " playerBotMidY= " + playerBotMidY + " playerX=" + curPosm.x);
                     if (levelMap.TileIsBelowSlope(curX, curY))
@@ -252,28 +375,71 @@ public class MyGlobal : MonoBehaviour
             }
         }
         float realY = 0;
-        if (!hitBlock)
-        {
-            realY = curPosm.y + velocity.y;
-        }
-        else
-        {
+        float realLeadingEdgeY = 0;
+        float extraSpace = 0.01f;
+
+        //If  hit a level tile, set realLeadingEdgeY
+        if (hitBlock)
+        { 
             if (yDir == 1)
             {
-                realY = blockBottomY - halfPlayerHeight - 0.01f;
+                realLeadingEdgeY = blockBottomY - extraSpace;
             }
             else //yDir 0 or 1
             {
                 //if hitting a slope and a non-slope, use slope height
                 if (slopeHeightToUse != 0)
                 {
-                    realY = (slopeHeightToUse + halfPlayerHeight) + 0.01f;
+                    realLeadingEdgeY = (slopeHeightToUse) + extraSpace;
                 }
                 else
                 {
-                    realY = (nonSlopeHeightToUse + halfPlayerHeight) + 0.01f;
+                    realLeadingEdgeY = (nonSlopeHeightToUse) + extraSpace;
                 }
             }
+        }
+
+        //If didn't hit a level tile, set realLeadingEdgeY if hit a non-level block
+        if (!hitBlock)
+        {
+            foreach (GameObject block in GetBlocks())
+            {
+                BoxCollider2D blockCollider = block.GetComponent<BoxCollider2D>();
+                RectPoints blockPoints = BoxColliderPoints(block.transform.position, blockCollider);
+                bool aboveBlock = curPosm.y > block.transform.position.y;
+                bool belowBlock = curPosm.y < block.transform.position.y;
+                bool horizontalWithBlock = (boxColliderPoints.left < blockPoints.right) && (boxColliderPoints.right > blockPoints.left);
+                if (horizontalWithBlock)
+                {
+                    if (yDir == -1 && aboveBlock)
+                    {
+                        bool willBePastTopSide = boxDesiredY < blockPoints.top;
+                        if (willBePastTopSide)
+                        {
+                            realLeadingEdgeY = blockPoints.top + (extraSpace);
+                            hitBlock = true;
+                        }
+                    }
+                    else if (yDir == 1 && belowBlock)
+                    {
+                        bool willBePastBotSide = boxDesiredY > blockPoints.bottom;
+                        if (willBePastBotSide)
+                        {
+                            realLeadingEdgeY = blockPoints.bottom - (extraSpace);
+                            hitBlock = true;
+                        }
+                    }
+                }
+            }
+        }
+
+        if (hitBlock)
+        {
+            realY = realLeadingEdgeY + (yDir * -1) * halfPlayerHeight;
+        }
+        else
+        {
+            realY = curPosm.y + velocity.y;
         }
         return realY;
     }
@@ -301,7 +467,7 @@ public class MyGlobal : MonoBehaviour
         int numColliders = 100;
         BoxCollider2D[] colliders = new BoxCollider2D[numColliders];
         ContactFilter2D contactFilter = new ContactFilter2D();
-        // Set you filters here according to https://docs.unity3d.com/ScriptReference/ContactFilter2D.html
+        // Set your filters here according to https://docs.unity3d.com/ScriptReference/ContactFilter2D.html
         int colliderCount = boxCollider.OverlapCollider(contactFilter, colliders);
 
         List<BoxCollider2D> objectList = new List<BoxCollider2D>();
@@ -353,13 +519,13 @@ public class MyGlobal : MonoBehaviour
         return false;
     }
 
-    public static Vector2 GetValidPosition(Vector2 curPosm, BoxCollider2D boxCollider, Vector2 velocity, ref bool hitTileX, ref bool hitTileY)
+    public static Vector2 GetValidPosition(Vector2 curPosm, BoxCollider2D boxCollider, Vector2 velocity, ref bool hitTileX, ref bool hitTileY, bool wasOnGround = false)
     {
         //currently assumes box and player colboxes have no offset
         float newX = GetNewX(curPosm, boxCollider, velocity, ref hitTileX);
         curPosm = new Vector2(newX, curPosm.y);
-        float newY = GetNewY(curPosm, boxCollider, velocity, ref hitTileY);
-
+        float newY = GetNewY(curPosm, boxCollider, velocity, ref hitTileY, wasOnGround);
+        
         return new Vector2(newX, newY);
     }
 
@@ -411,6 +577,12 @@ public class MyGlobal : MonoBehaviour
         point.topRight = new Vector2(rightX, topY);
         point.botLeft = new Vector2(leftX, bottomY);
         point.botRight = new Vector2(rightX, bottomY);
+        point.top = topY;
+        point.bottom = bottomY;
+        point.left = leftX;
+        point.right = rightX;
+        point.width = boxCollider.size.x;
+        point.height = boxCollider.size.y;
         return point;
     }
 
