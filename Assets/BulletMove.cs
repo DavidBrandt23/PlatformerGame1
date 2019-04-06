@@ -7,6 +7,7 @@ public class BulletMove : MonoBehaviour {
     [SerializeField]
     private float bulletSpeed;
     private BoxCollider2D m_BoxCollider;
+    public bool penetrateEnemy;
     // Use this for initialization
     void Start () {
         m_BoxCollider = GetComponent<BoxCollider2D>();

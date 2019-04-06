@@ -10,6 +10,7 @@ public class OnTouch : MonoBehaviour {
     public int damageAmount;
     public int healAmount;
     public bool addBingo;
+    public bool giveEnergy;
     public List<string> otherTags;
     public AudioClip audioClip;
     [SerializeField] public UnityEvent myEvent;
@@ -40,6 +41,10 @@ public class OnTouch : MonoBehaviour {
         if (addBingo)
         {
             c.onCollideDeleage += AddBingo;
+        }
+        if (giveEnergy)
+        {
+            c.onCollideDeleage += GiveOtherEnergy;
         }
 
     }
@@ -91,6 +96,17 @@ public class OnTouch : MonoBehaviour {
             if (hs != null)
             {
                 hs.Heal(healAmount);
+            }
+        }
+    }
+    private void GiveOtherEnergy(GameObject other)
+    {
+        if (OtherHasCorrectTag(other))
+        {
+            PlayerController pc = other.GetComponent<PlayerController>();
+            if (pc != null)
+            {
+                pc.giveEnergy(50.0f);
             }
         }
     }

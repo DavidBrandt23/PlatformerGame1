@@ -28,6 +28,9 @@ public class PlayerHealthUI : MonoBehaviour
             {
                 curHP = hpScript.CurrentHP;
             }
+
+            GameObject energyText = GameObject.Find("EnergyText");
+            energyText.GetComponent<Text>().text = "Energy: " + player.GetComponent<PlayerController>().getEnergy();
         }
 
         for (int i = 0; i < maxHP; i++)
@@ -36,5 +39,6 @@ public class PlayerHealthUI : MonoBehaviour
             GameObject heartObject = GameObject.Find("Heart" + heartIndex);
             heartObject.GetComponent<SpriteRenderer>().enabled = (curHP >= heartIndex);
         }
+
     }
 }

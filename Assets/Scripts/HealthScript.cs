@@ -13,6 +13,7 @@ public class HealthScript : MonoBehaviour {
 
     private bool invuln;
     private float curInvulnTime;
+    private bool dead;
 
     private int _currentHP;
     public int CurrentHP
@@ -59,15 +60,19 @@ public class HealthScript : MonoBehaviour {
         this.GetComponent<Flash>().FlashOnce();
         if (CurrentHP <= 0)
         {
-            if (onDeathDelegate == null)
+            if(!dead)
             {
-                Instantiate(explosionPrefab, GetComponent<Transform>().position, Quaternion.identity);
-                Destroy(this.gameObject);
-            }
-            else
-            {
-                Instantiate(explosionPrefab, GetComponent<Transform>().position, Quaternion.identity);
-                onDeathDelegate();
+                dead = true;
+                if (onDeathDelegate == null)
+                {
+                    Instantiate(explosionPrefab, GetComponent<Transform>().position, Quaternion.identity);
+                    Destroy(this.gameObject);
+                }
+                else
+                {
+                    Instantiate(explosionPrefab, GetComponent<Transform>().position, Quaternion.identity);
+                    onDeathDelegate();
+                }
             }
            // m_AudioSource.PlayOneShot(deathNoise);
             ///this.GetComponent<DestroyOnTimer>().StartTimer();
@@ -100,6 +105,7 @@ public class HealthScript : MonoBehaviour {
     void Start () {
         CurrentHP = MaxHP;
         m_AudioSource = this.GetComponent<AudioSource>();
+        dead = false;
     }
 	
 	// Update is called once per frame

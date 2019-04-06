@@ -8,6 +8,7 @@ public class PlayerInput : MonoBehaviour
     private bool m_Jump;
     private bool m_Boost;
     private bool m_Shoot;
+    private bool m_PowerShoot;
 
 
     private void Awake()
@@ -29,6 +30,11 @@ public class PlayerInput : MonoBehaviour
             // Read the jump input in Update so button presses aren't missed.
             m_Shoot = CrossPlatformInputManager.GetButtonDown("Shoot");
         }
+        if (!m_PowerShoot)
+        {
+            // Read the jump input in Update so button presses aren't missed.
+            m_PowerShoot = CrossPlatformInputManager.GetButtonDown("PowerShoot");
+        }
         m_Boost = Input.GetButton("Run");
     }
 
@@ -41,8 +47,10 @@ public class PlayerInput : MonoBehaviour
         // Pass all parameters to the character control script.
         m_Character.Move(h, crouch, m_Jump, m_Boost);
         if(m_Shoot)m_Character.shootPressed();
+        if (m_PowerShoot) m_Character.powerShotPressed();
         //m_Jump = false;
         m_Shoot = false;
+        m_PowerShoot = false;
     }
     
 }

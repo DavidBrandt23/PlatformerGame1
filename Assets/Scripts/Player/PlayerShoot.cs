@@ -7,28 +7,31 @@ public class PlayerShoot : MonoBehaviour
     [SerializeField] private AudioClip shootNoise;
     [SerializeField] private GameObject bulletPrefab;
     [SerializeField] private float cooldownTime;
-    private bool canShoot;
+    private bool offCooldown;
 
     private AudioSource m_AudioSource;
 
     void Start()
     {
         m_AudioSource = GetComponent<AudioSource>();
-        canShoot = true;
+        offCooldown = true;
     }
     
-    private void CanShoot()
+    protected void endCooldown()
     {
-        canShoot = true;
+        offCooldown = true;
     }
-
+    protected virtual bool CanShoot()
+    {
+        return offCooldown;
+    }
     /// <summary>
     /// 
     /// </summary>
     /// <param name="right">Will shoot left if false</param>
     public bool TryShoot(bool right)
     {
-        if (!canShoot)
+        if (!CanShoot())
         {
             return false;
         }
@@ -50,10 +53,11 @@ public class PlayerShoot : MonoBehaviour
         GameObject newBullet = Instantiate(bulletPrefab, bulletPos, Quaternion.identity);
         newBullet.GetComponent<BulletMove>().direction = direction;
         newBullet.transform.parent = GameObject.Find("Entities").transform;
-        m_AudioSource.PlayOneShot(shootNoise);
 
-        canShoot = false;
-        Invoke("CanShoot", cooldownTime);
+        MyGlobal.PlayGlobalSound(shootNoise);
+
+        offCooldown = false;
+        Invoke("endCooldown", cooldownTime);
         return true;
     }
 }

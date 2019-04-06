@@ -14,6 +14,8 @@ public class PlayerController : MonoBehaviour
     private Transform m_Transform;
     private HealthScript m_HealthScript;
     private Flash m_Flash;
+    private PlayerShoot basicShootScript;
+    private PlayerShoot powerShootScript;
 
     private bool m_Grounded;
     private bool m_FacingRight = true;
@@ -23,6 +25,9 @@ public class PlayerController : MonoBehaviour
     private const float maxJumpTime = 13.0f;
     private float curJumpTime = 0.0f;
     private bool canJumpAgain = true;
+    private float energy;
+    private const float maxEnergy = 100.0f;
+    private const float powerShotCost = 10.0f;
     // private bool shooting = false;
 
     //should maybe be Damagable or something
@@ -40,7 +45,9 @@ public class PlayerController : MonoBehaviour
         m_HealthScript.onInvulnEndDelegate = onInvulnEnd;
         m_HealthScript.onDeathDelegate = onDeath;
         m_Flash = GetComponent<Flash>();
-        
+        basicShootScript = GameObject.Find("BasicWeapon").GetComponent<PlayerShoot>();
+        powerShootScript = GameObject.Find("PowerWeapon").GetComponent<PlayerShoot>();
+        energy = maxEnergy;
 
         m_Grounded = false;
     }
@@ -62,7 +69,18 @@ public class PlayerController : MonoBehaviour
         m_Flash.SetIsFlashing(false);
         isStunned = false;
     }
-    
+
+    public float getEnergy()
+    {
+        return energy;
+    }
+
+    public void giveEnergy(float add)
+    {
+        energy += add;
+        energy = Mathf.Clamp(energy, 0, maxEnergy);
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -71,16 +89,34 @@ public class PlayerController : MonoBehaviour
 
     public void shootPressed()
     {
-        PlayerShoot ShootScript = this.GetComponent<PlayerShoot>();
-        if (ShootScript.TryShoot(m_FacingRight))
+        if (basicShootScript.TryShoot(m_FacingRight))
         {
             float cooldownTime = 0.3f;
             AnimatorStateInfo animationState = m_Anim.GetCurrentAnimatorStateInfo(0);
             m_Anim.SetFloat("RunAnimPos", animationState.normalizedTime);
-           // Debug.Log("normtime" + animationState.normalizedTime);
             m_Anim.SetLayerWeight(0, 0.0f);
             m_Anim.SetLayerWeight(1, 1.0f);
-            //m_Anim.s
+            m_Anim.SetBool("IsShooting", true);
+            Invoke("shootEnd", cooldownTime);
+        }
+    }
+    public void powerShotPressed()
+    {
+        if(energy >= powerShotCost)
+        {
+            energy -= powerShotCost;
+        }
+        else
+        {
+            return;
+        }
+        if (powerShootScript.TryShoot(m_FacingRight))
+        {
+            float cooldownTime = 0.3f;
+            AnimatorStateInfo animationState = m_Anim.GetCurrentAnimatorStateInfo(0);
+            m_Anim.SetFloat("RunAnimPos", animationState.normalizedTime);
+            m_Anim.SetLayerWeight(0, 0.0f);
+            m_Anim.SetLayerWeight(1, 1.0f);
             m_Anim.SetBool("IsShooting", true);
             Invoke("shootEnd", cooldownTime);
         }
