@@ -6,6 +6,7 @@ public class TurretEnemyController : EnemyCommonController
 {
     Vector3 bulletSourcePos;
     public GameObject bulletPrefab;
+    public ScriptableObject a;
     // Start is called before the first frame update
     protected override void Start()
     {

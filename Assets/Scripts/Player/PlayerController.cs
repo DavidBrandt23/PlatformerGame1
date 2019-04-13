@@ -16,6 +16,7 @@ public class PlayerController : MonoBehaviour
     private Flash m_Flash;
     private PlayerShoot basicShootScript;
     private PlayerShoot powerShootScript;
+    private GameObject shield;
 
     private bool m_Grounded;
     private bool m_FacingRight = true;
@@ -48,6 +49,8 @@ public class PlayerController : MonoBehaviour
         basicShootScript = GameObject.Find("BasicWeapon").GetComponent<PlayerShoot>();
         powerShootScript = GameObject.Find("PowerWeapon").GetComponent<PlayerShoot>();
         energy = maxEnergy;
+        shield = GameObject.Find("PlayerShield");
+        shield.SetActive(false);
 
         m_Grounded = false;
     }
@@ -122,6 +125,32 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private bool shielding;
+    private void tryShieldOn()
+    {
+        if(energy > 0)
+        {
+            energy -= 0.10f;
+            shieldOn();
+        }
+        else
+        {
+            shieldOff();
+        }
+    }
+    private void shieldOn()
+    {
+        m_HealthScript.CannotHurt = true;
+        shielding = true;
+        shield.SetActive(true);
+    }
+    private void shieldOff()
+    {
+        m_HealthScript.CannotHurt = false;
+        shielding = false;
+        shield.SetActive(false);
+    }
+
     private void shootEnd()
     {
         AnimatorStateInfo animationState = m_Anim.GetCurrentAnimatorStateInfo(0);
@@ -132,7 +161,7 @@ public class PlayerController : MonoBehaviour
         m_Anim.SetBool("IsShooting",false);
     }
     //should be called by PlayerInput.FixedUpdate
-    public void Move(float xMoveDir, bool crouch, bool jumpPressed, bool boosting)
+    public void Move(float xMoveDir, bool crouch, bool jumpPressed, bool running)
     {
         crouch = false;
 
@@ -145,7 +174,7 @@ public class PlayerController : MonoBehaviour
             Flip();
         }
 
-        float speed = xMoveDir * (boosting ? m_XSpeedBoost : m_XSpeed);
+        float speed = xMoveDir * (shielding ? m_XSpeedBoost : m_XSpeed);
         bool hitTileX = false, hitTileY = false;
         if (!isStunned)
         {
@@ -157,20 +186,28 @@ public class PlayerController : MonoBehaviour
             m_BasicMovement.setVelocityX(0);
 
         }
+        if (running)
+        {
+            tryShieldOn();
+        }
+        else
+        {
+            shieldOff();
+        }
+
         bool wasOnGround = m_Grounded && !jumpPressed;
         m_BasicMovement.Move(ref hitTileX, ref hitTileY, wasOnGround);
         m_Grounded=m_BasicMovement.OnGround();
 
         m_Anim.SetBool("OnGround", m_Grounded);
-        //Debug.Log(m_Grounded);
-        m_Anim.SetFloat("XSpeed", Mathf.Abs(speed));
+        m_Anim.SetFloat("XSpeed", Mathf.Abs(speed) * 10);
         float animYSpeed = Mathf.Abs(m_BasicMovement.GetVelocity().y);
         if (m_Grounded)
         {
             animYSpeed = 0;
         }
         m_Anim.SetFloat("YSpeed", animYSpeed);
-        m_Anim.SetFloat("RunAnimSpeed", Mathf.Abs(speed) * 10);
+       // m_Anim.SetFloat("RunAnimSpeed", Mathf.Abs(speed) * 10);
 
 
         if(m_Grounded && !jumpPressed)

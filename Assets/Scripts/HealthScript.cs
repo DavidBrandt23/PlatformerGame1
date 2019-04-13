@@ -11,9 +11,20 @@ public class HealthScript : MonoBehaviour {
     private AudioSource m_AudioSource;
     public GameObject explosionPrefab;
 
+
     private bool invuln;
     private float curInvulnTime;
     private bool dead;
+
+    private bool cannotHurt;
+    public bool CannotHurt
+    {
+        get
+        {
+            return cannotHurt;
+        }
+        set { cannotHurt = value; }
+    }
 
     private int _currentHP;
     public int CurrentHP
@@ -50,7 +61,7 @@ public class HealthScript : MonoBehaviour {
     }
     public void Damage(int amount)
     {
-        if (invuln)
+        if (invuln || CannotHurt)
         {
             return;
         }

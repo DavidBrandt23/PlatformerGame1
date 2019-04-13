@@ -4,21 +4,15 @@ using UnityEngine;
 
 public class BulletMove : MonoBehaviour {
     public Vector3 direction;
-    [SerializeField]
-    private float bulletSpeed;
+    [SerializeField] private float bulletSpeed;
     private BoxCollider2D m_BoxCollider;
     public bool penetrateEnemy;
-    // Use this for initialization
+
+
     void Start () {
         m_BoxCollider = GetComponent<BoxCollider2D>();
-
         Collideable c = GetComponent<Collideable>();
     }
-    
-    // Update is called once per frame
-    void Update () {
-		
-	}
 
     void FixedUpdate()
     {
@@ -31,6 +25,5 @@ public class BulletMove : MonoBehaviour {
         {
             Destroy(this.gameObject);
         }
-        //MyGlobal.
     }
 }
