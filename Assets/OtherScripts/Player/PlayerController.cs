@@ -29,6 +29,8 @@ public class PlayerController : MonoBehaviour
     private float energy;
     private const float maxEnergy = 100.0f;
     private const float powerShotCost = 10.0f;
+    public FloatReference speed;
+    public FloatVariable speed2;
     // private bool shooting = false;
 
     //should maybe be Damagable or something
@@ -163,6 +165,7 @@ public class PlayerController : MonoBehaviour
     //should be called by PlayerInput.FixedUpdate
     public void Move(float xMoveDir, bool crouch, bool jumpPressed, bool running)
     {
+        speed2.Value += 1;
         crouch = false;
 
         if (xMoveDir > 0 && !m_FacingRight)

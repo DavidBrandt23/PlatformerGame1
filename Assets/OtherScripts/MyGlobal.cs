@@ -177,9 +177,13 @@ public class MyGlobal : MonoBehaviour
     private static List<GameObject> GetBlocks()
     {
 
-        GameObject blockHolder = GameObject.Find("Blocks");
-        Transform[] childTransforms = blockHolder.GetComponentsInChildren<Transform>();
         List<GameObject> children = new List<GameObject>();
+        GameObject blockHolder = GameObject.Find("Blocks");
+        if(blockHolder == null)
+        {
+            return children; //blank list
+        }
+        Transform[] childTransforms = blockHolder.GetComponentsInChildren<Transform>();
         foreach (Transform t in blockHolder.transform)
         {
             children.Add(t.gameObject);
