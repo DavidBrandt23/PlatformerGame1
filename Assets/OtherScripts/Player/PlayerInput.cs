@@ -9,13 +9,11 @@ public class PlayerInput : MonoBehaviour
     private bool m_Boost;
     private bool m_Shoot;
     private bool m_PowerShoot;
-    public RuntimeSetEntity set;
 
 
     private void Awake()
     {
         m_Character = GetComponent<PlayerController>();
-        set.Add(gameObject);
     }
 
     private void Update()

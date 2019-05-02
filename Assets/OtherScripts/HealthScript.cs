@@ -6,6 +6,7 @@ using UnityEngine;
 public class HealthScript : MonoBehaviour {
     [SerializeField] private int MaxHP;
     private float InvulnTime;
+    public float customInvulnTime;
     [SerializeField] private AudioClip hurtNoise;
     [SerializeField] private AudioClip deathNoise;
     public GameObject explosionPrefab;
@@ -56,6 +57,7 @@ public class HealthScript : MonoBehaviour {
         CurrentHP = MaxHP;
         dead = false;
         InvulnTime = 0.3f;
+        if (customInvulnTime != 0.0f) InvulnTime = customInvulnTime;
     }
 
 

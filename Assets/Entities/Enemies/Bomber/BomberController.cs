@@ -6,7 +6,6 @@ public class BomberController : EnemyCommonController
 {
     public GameObject bulletPrefab;
     Vector3 bulletSourcePos;
-    public RuntimeSetEntity enemySet;
 
     private int xDir;
     // Start is called before the first frame update
@@ -19,8 +18,7 @@ public class BomberController : EnemyCommonController
     }
     private void Awake()
     {
-
-        enemySet.Add(gameObject); 
+        
     }
     private void changeDir()
     {

@@ -2,7 +2,7 @@
 using System.Collections;
 
 [CreateAssetMenu]
-public class RuntimeSetEntity : RuntimeSet<GameObject>
+public class RuntimeSet_GameObject : RuntimeSet<GameObject>
 {
 
 }

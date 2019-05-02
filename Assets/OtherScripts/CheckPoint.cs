@@ -23,7 +23,7 @@ public class CheckPoint : MonoBehaviour
             isActive = true;
             //SceneManager.LoadScene("Scene2");
             GetComponent<SpriteRenderer>().sprite = touchedFlag;
-            Object.FindObjectOfType<GameController>().respawnPosition = transform.position;
+            GameController.respawnPosition = transform.position;
             MyGlobal.PlayGlobalSound(checkpointNoise);
         }
     }

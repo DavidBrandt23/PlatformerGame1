@@ -3,7 +3,7 @@ using System.Collections;
 using System;
 
 [Serializable]
-public class FloatReference : ScriptableObject
+public class FloatReference
 {
     public bool UseConstant = true;
     public float ConstantValue;

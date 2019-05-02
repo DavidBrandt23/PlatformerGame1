@@ -6,6 +6,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float m_XSpeed;
     [SerializeField] private float m_XSpeedBoost;
     [SerializeField] private float m_JumpVelocity;
+    public Vector3Variable PlayerPos;
 
     private BoxCollider2D m_BoxCollider;
     private BasicMovement m_BasicMovement;
@@ -211,10 +212,16 @@ public class PlayerController : MonoBehaviour
             animYSpeed = 0;
         }
         m_Anim.SetFloat("YSpeed", animYSpeed);
-       // m_Anim.SetFloat("RunAnimSpeed", Mathf.Abs(speed) * 10);
+        // m_Anim.SetFloat("RunAnimSpeed", Mathf.Abs(speed) * 10);
 
 
-        if(m_Grounded && !jumpPressed)
+
+        if (hitTileY)
+        {
+            isJumpingUp = false;
+            m_BasicMovement.setVelocityY(0);
+        }
+        if (m_Grounded && !jumpPressed)
         {
             canJumpAgain = true;
         }
@@ -239,8 +246,14 @@ public class PlayerController : MonoBehaviour
         }
         if (!isJumpingUp && m_BasicMovement.GetVelocity().y > 0)
         {
-            m_BasicMovement.setVelocityY(0);
+          //  m_BasicMovement.setVelocityY(0);
         }
+
+        if(PlayerPos != null)
+        {
+            PlayerPos.Value = transform.position;
+        }
+
     }
 
     private void Flip()

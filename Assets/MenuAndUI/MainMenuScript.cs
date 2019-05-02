@@ -13,7 +13,7 @@ public class MainMenuScript : MonoBehaviour
 
     public void PlayClicked()
     {
-        SceneManager.LoadScene("Scene1");
+        SceneManager.LoadScene("Cutscene_Opening");
         //ControllerScript.setPauseState(false);
     }
     public void QuitClicked()

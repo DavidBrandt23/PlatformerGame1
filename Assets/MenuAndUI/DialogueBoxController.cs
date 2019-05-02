@@ -9,6 +9,7 @@ public class DialogueBoxController : MonoBehaviour
     List<String> messages;
     public TextMeshProUGUI mainText;
     int currentMessage = 0;
+    
     // Start is called before the first frame update
     void Start()
     {

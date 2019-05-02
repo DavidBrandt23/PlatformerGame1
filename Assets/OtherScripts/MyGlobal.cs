@@ -177,18 +177,20 @@ public class MyGlobal : MonoBehaviour
     private static List<GameObject> GetBlocks()
     {
 
-        List<GameObject> children = new List<GameObject>();
-        GameObject blockHolder = GameObject.Find("Blocks");
-        if(blockHolder == null)
-        {
-            return children; //blank list
-        }
-        Transform[] childTransforms = blockHolder.GetComponentsInChildren<Transform>();
-        foreach (Transform t in blockHolder.transform)
-        {
-            children.Add(t.gameObject);
-        }
-        return children;
+        // List<GameObject> children = new List<GameObject>();
+        //GameObject blockHolder = GameObject.Find("Blocks");
+        //if(blockHolder == null)
+        //{
+        //    return children; //blank list
+        //}
+        //Transform[] childTransforms = blockHolder.GetComponentsInChildren<Transform>();
+        //foreach (Transform t in blockHolder.transform)
+        //{
+        //    children.Add(t.gameObject);
+        //}
+        // return children;
+        return GetGameControllerObject().GetComponent<GameController>().GetNonGridBlocks();
+
     }
 
     private static float GetNewX(Vector2 curPosm, BoxCollider2D boxCollider, Vector2 velocity, ref bool hitTile)
@@ -354,6 +356,7 @@ public class MyGlobal : MonoBehaviour
                         //blockBottomY = (float)curY - (tileSize / 2) - 0.02f;
                         blockBottomY = (float)curY - 0.02f;
                         hitBlock = true;
+                        hitTile = true;
                         break;
                     }
                 }
@@ -441,6 +444,7 @@ public class MyGlobal : MonoBehaviour
                         {
                             realLeadingEdgeY = blockPoints.top + (extraSpace);
                             hitBlock = true;
+                            hitTile = true;
                         }
                     }
                     else if (yDir == 1 && belowBlock)
@@ -450,6 +454,7 @@ public class MyGlobal : MonoBehaviour
                         {
                             realLeadingEdgeY = blockPoints.bottom - (extraSpace);
                             hitBlock = true;
+                            hitTile = true;
                         }
                     }
                 }

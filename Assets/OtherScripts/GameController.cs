@@ -10,11 +10,17 @@ public class GameController : MonoBehaviour
     public GameObject pauseCanvas;
     public GameObject gameOverCanvas;
     private int bingoCount = 0;
-    public Vector3? respawnPosition = null;
+    public static Vector3? respawnPosition = null;
     private string currentScene;
+    public RuntimeSet_GameObject NonGridBlocks;
     public int GetBingoCount()
     {
         return bingoCount;
+    }
+
+    public List<GameObject> GetNonGridBlocks()
+    {
+        return NonGridBlocks.Items;
     }
 
     // Start is called before the first frame update
@@ -22,18 +28,19 @@ public class GameController : MonoBehaviour
     {
         pauseCanvas.SetActive(false);
         paused = false;
-        DontDestroyOnLoad(gameObject);
+       // DontDestroyOnLoad(gameObject);
         SceneManager.sceneLoaded += OnSceneLoaded;
         string startScene = "Level1";
         //startScene = "Cutscene_Opening";
         currentScene = startScene;
+        LevelMap.GetLevelMapObject().onLoadLevel();
         if (SceneManager.GetActiveScene().name.Equals(startScene))
         {
-            LevelMap.GetLevelMapObject().onLoadLevel();
+           // LevelMap.GetLevelMapObject().onLoadLevel();
         }
         else
         {
-            loadLevel(startScene);
+           // loadLevel(startScene);
         }
         
     }
@@ -50,7 +57,7 @@ public class GameController : MonoBehaviour
     private void OnSceneLoaded(Scene aScene, LoadSceneMode aMode)
     {
         LevelMap.GetLevelMapObject().onLoadLevel();
-        gameOverCanvas.SetActive(false);
+        //gameOverCanvas.SetActive(false);
         if (respawnPosition != null)
         {
            MyGlobal.GetPlayerObject().transform.position = (Vector3)respawnPosition;
@@ -58,7 +65,7 @@ public class GameController : MonoBehaviour
         }
     }
 
-    private void loadLevel(string sceneName)
+    public void loadLevel(string sceneName)
     {
 
         SceneManager.LoadScene(sceneName);
