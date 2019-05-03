@@ -11,6 +11,7 @@ public class OnTouch : MonoBehaviour {
     public int healAmount;
     public bool addBingo;
     public bool giveEnergy;
+    public GameEvent eventToRaise;
     public List<string> otherTags;
     public AudioClip audioClip;
     [SerializeField] public UnityEvent myEvent;
@@ -46,7 +47,18 @@ public class OnTouch : MonoBehaviour {
         {
             c.onCollideDeleage += GiveOtherEnergy;
         }
+        if (eventToRaise != null)
+        {
+            c.onCollideDeleage += raiseEvent;
+        }
 
+    }
+    private void raiseEvent(GameObject other)
+    {
+        if (OtherHasCorrectTag(other))
+        {
+            eventToRaise.Raise();
+        }
     }
 
     private bool OtherHasCorrectTag(GameObject other)
