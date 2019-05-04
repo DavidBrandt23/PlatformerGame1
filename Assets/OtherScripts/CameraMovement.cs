@@ -10,28 +10,32 @@ public class CameraMovement : MonoBehaviour {
     private const float cameraHeight = 17.0f;
     private const float xBuffer = 15.0f;
     private const float yBuffer = 5.0f;
+    public Vector3Variable FollowObjectPos;
+    public bool shouldFollowTarget = false;
     // Use this for initialization
-    void Start () {
+    void Awake () {
 
         // Switch to 640 x 480 full-screen at 60 hz
         //  Screen.SetResolution(480, 270, false, 60);
-        GameObject playerOb = GameObject.Find("PlayerMan");
-        transform.position = playerOb.transform.position;
+        if(FollowObjectPos != null && shouldFollowTarget)
+        {
+            transform.position = FollowObjectPos.Value;
+        }
+
         Vector3 curPos = transform.position;
         transform.position = new Vector3(curPos.x, curPos.y, -1);
-
     }
 	
 	// Update is called once per frame
 	void FixedUpdate() {
-        GameObject playerOb = GameObject.Find("PlayerMan");
-        Transform transform = GetComponent<Transform>();
-
-        if (playerOb == null)
+        if (FollowObjectPos == null || !shouldFollowTarget)
         {
             return;
         }
-        Vector3 playerPos = playerOb.GetComponent<Transform>().position;
+
+        Transform transform = GetComponent<Transform>();
+        
+        Vector3 playerPos = FollowObjectPos.Value;
         float newX = transform.position.x;
         float newY = transform.position.y;
 

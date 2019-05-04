@@ -10,6 +10,7 @@ public class HealthScript : MonoBehaviour {
     [SerializeField] private AudioClip hurtNoise;
     [SerializeField] private AudioClip deathNoise;
     public GameObject explosionPrefab;
+    public GameEvent deathEvent;
 
 
     private bool invuln;
@@ -85,6 +86,11 @@ public class HealthScript : MonoBehaviour {
             if(!dead)
             {
                 dead = true;
+                if(deathEvent!= null)
+                {
+                    deathEvent.Raise();
+                }
+                
                 if (onDeathDelegate == null)
                 {
                     Instantiate(explosionPrefab, GetComponent<Transform>().position, Quaternion.identity);

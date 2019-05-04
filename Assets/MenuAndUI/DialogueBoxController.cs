@@ -11,7 +11,7 @@ public class DialogueBoxController : MonoBehaviour
     int currentMessage = 0;
     
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         messages = new List<String>();
         messages.Add("What is going on here?");
@@ -19,6 +19,7 @@ public class DialogueBoxController : MonoBehaviour
         messages.Add("I'll get those ingredients back!");
         setTextToCurrentMessage();
     }
+
     public void displayNextMessage()
     {
         currentMessage++;

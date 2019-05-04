@@ -9,10 +9,15 @@ public class GameController : MonoBehaviour
     private bool paused;
     public GameObject pauseCanvas;
     public GameObject gameOverCanvas;
+    public GameObject HUD;
     private int bingoCount = 0;
     public static Vector3? respawnPosition = null;
     private string currentScene;
     public RuntimeSet_GameObject NonGridBlocks;
+    public bool CutsceneMode;
+
+
+    #region Public stuff
     public int GetBingoCount()
     {
         return bingoCount;
@@ -23,7 +28,48 @@ public class GameController : MonoBehaviour
         return NonGridBlocks.Items;
     }
 
-    // Start is called before the first frame update
+    public void OnPlayerDeath()
+    {
+        gameOverCanvas.SetActive(true);
+        Invoke("respawn", 3.0f);
+    }
+
+    public void loadLevel(string sceneName)
+    {
+
+        SceneManager.LoadScene(sceneName);
+
+    }
+    public void AddBingoCard()
+    {
+        bingoCount += 1;
+    }
+    public void UnPause()
+    {
+        paused = false;
+        this.onUnPause();
+    }
+
+    public void QuitGame()
+    {
+        Application.Quit();
+    }
+
+    public void SetHUDVisibility(bool visible)
+    {
+        HUD.GetComponent<InGameHUD>().SetVisibility(visible);
+    }
+    #endregion Public stuff
+
+    private void Awake()
+    {
+        if (CutsceneMode)
+        {
+            SetHUDVisibility(false);
+        }
+    }
+
+
     void Start()
     {
         pauseCanvas.SetActive(false);
@@ -44,11 +90,6 @@ public class GameController : MonoBehaviour
         }
         
     }
-    public void OnPlayerDeath()
-    {
-        gameOverCanvas.SetActive(true);
-        Invoke("respawn", 3.0f);
-    }
 
     private void respawn()
     {
@@ -65,12 +106,6 @@ public class GameController : MonoBehaviour
         }
     }
 
-    public void loadLevel(string sceneName)
-    {
-
-        SceneManager.LoadScene(sceneName);
-
-    }
     private void Update()
     {
         bool pausePressed;
@@ -88,29 +123,15 @@ public class GameController : MonoBehaviour
             }
         }
     }
-    public void AddBingoCard()
-    {
-        bingoCount += 1;
-    }
-    public void UnPause()
-    {
-        paused = false;
-        this.onUnPause();
-    }
     private void onPause()
     {
         Time.timeScale = 0;
         pauseCanvas.SetActive(true);
     }
-    
+
     private void onUnPause()
     {
         Time.timeScale = 1;
         pauseCanvas.SetActive(false);
-    }
-
-    public void QuitGame()
-    {
-        Application.Quit();
     }
 }

@@ -24,7 +24,7 @@ public class LevelMap : MonoBehaviour {
         }
         else
         {
-            Debug.Log("GameManager could not find TileMap1");
+           // Debug.Log("GameManager could not find TileMap1");
         }
     }
 

@@ -7,6 +7,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float m_XSpeedBoost;
     [SerializeField] private float m_JumpVelocity;
     public Vector3Variable PlayerPos;
+    public FloatVariable PlayerEnergy;
+    public IntegerVariable PlayerHealth;
 
     private BoxCollider2D m_BoxCollider;
     private BasicMovement m_BasicMovement;
@@ -30,8 +32,6 @@ public class PlayerController : MonoBehaviour
     private float energy;
     private const float maxEnergy = 100.0f;
     private const float powerShotCost = 10.0f;
-    public FloatReference speed;
-    public FloatVariable speed2;
     // private bool shooting = false;
 
     //should maybe be Damagable or something
@@ -166,7 +166,6 @@ public class PlayerController : MonoBehaviour
     //should be called by PlayerInput.FixedUpdate
     public void Move(float xMoveDir, bool crouch, bool jumpPressed, bool running)
     {
-        speed2.Value += 1;
         crouch = false;
 
         if (xMoveDir > 0 && !m_FacingRight)
@@ -253,6 +252,15 @@ public class PlayerController : MonoBehaviour
         {
             PlayerPos.Value = transform.position;
         }
+        if (PlayerEnergy != null)
+        {
+            PlayerEnergy.Value = energy;
+        }
+        if (PlayerHealth != null)
+        {
+            PlayerHealth.Value = m_HealthScript.CurrentHP;
+        }
+
 
     }
 
