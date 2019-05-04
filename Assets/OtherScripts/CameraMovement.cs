@@ -36,44 +36,50 @@ public class CameraMovement : MonoBehaviour {
         Transform transform = GetComponent<Transform>();
         
         Vector3 playerPos = FollowObjectPos.Value;
-        float newX = transform.position.x;
-        float newY = transform.position.y;
+        float newX = playerPos.x;
+        float newY = playerPos.y;
+        //float newX = transform.position.x;
+        //float newY = transform.position.y;
 
-        float halfWidth = cameraWidth / 2.0f, halfHeight = cameraHeight / 2.0f;
+        //float halfWidth = cameraWidth / 2.0f, halfHeight = cameraHeight / 2.0f;
 
-        float cameraLeftX = newX - halfWidth;
-        float cameraRightX = newX + halfWidth;
-        float cameraTopY = newY + halfHeight;
-        float cameraBottomY = newY - halfHeight;
+        //float cameraLeftX = newX - halfWidth;
+        //float cameraRightX = newX + halfWidth;
+        //float cameraTopY = newY + halfHeight;
+        //float cameraBottomY = newY - halfHeight;
 
-        if(distance(cameraLeftX, playerPos.x) < xBuffer)
-        {
-            newX = playerPos.x + (halfWidth - xBuffer);
-        }
-        else if (distance(cameraRightX, playerPos.x) < xBuffer)
-        {
-            newX = playerPos.x - (halfWidth - xBuffer);
-        }
+        //if(distance(cameraLeftX, playerPos.x) < xBuffer)
+        //{
+        //    newX = playerPos.x + (halfWidth - xBuffer);
+        //}
+        //else if (distance(cameraRightX, playerPos.x) < xBuffer)
+        //{
+        //    newX = playerPos.x - (halfWidth - xBuffer);
+        //}
 
-        if (distance(cameraTopY, playerPos.y) < yBuffer)
-        {
-            newY = playerPos.y - (halfHeight - yBuffer);
-        }
-        else if (distance(cameraBottomY, playerPos.y) < yBuffer)
-        {
-            newY = playerPos.y + (halfHeight - yBuffer);
-        }
-
-
+        //if (distance(cameraTopY, playerPos.y) < yBuffer)
+        //{
+        //    newY = playerPos.y - (halfHeight - yBuffer);
+        //}
+        //else if (distance(cameraBottomY, playerPos.y) < yBuffer)
+        //{
+        //    newY = playerPos.y + (halfHeight - yBuffer);
+        //}
 
 
-        newX = Mathf.Clamp(newX, leftXBound, rightXBound);
+
+        //newX = Mathf.Clamp(newX, leftXBound, rightXBound);
 
         transform.position = new Vector3(newX, newY, transform.position.z);
 
+
+
+
+
+
         // float newY = transform.position.y;
         // newX = newX - (float) extra;
-        double extra = newX % 0.0625;
+        // double extra = newX % 0.0625;
         // transform.position = new Vector3(newX, transform.position.y, transform.position.z);
 
         //int PPU = 16;
