@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour
     public Vector3Variable PlayerPos;
     public FloatVariable PlayerEnergy;
     public IntegerVariable PlayerHealth;
+    public GameEvent PlayerStartEvent;
 
     private BoxCollider2D m_BoxCollider;
     private BasicMovement m_BasicMovement;
@@ -30,7 +31,7 @@ public class PlayerController : MonoBehaviour
     private float curJumpTime = 0.0f;
     private bool canJumpAgain = true;
     private float energy;
-    private const float maxEnergy = 100.0f;
+    private const float maxEnergy = 500.0f;
     private const float powerShotCost = 10.0f;
     // private bool shooting = false;
 
@@ -56,6 +57,13 @@ public class PlayerController : MonoBehaviour
         shield.SetActive(false);
 
         m_Grounded = false;
+        if(GameController.respawnPosition != null)
+        {
+            transform.position = (Vector3)GameController.respawnPosition;
+        }
+
+        updatePositionReference();
+        PlayerStartEvent.Raise();
     }
 
     private void onHurt()
@@ -248,10 +256,7 @@ public class PlayerController : MonoBehaviour
           //  m_BasicMovement.setVelocityY(0);
         }
 
-        if(PlayerPos != null)
-        {
-            PlayerPos.Value = transform.position;
-        }
+        updatePositionReference();
         if (PlayerEnergy != null)
         {
             PlayerEnergy.Value = energy;
@@ -260,8 +265,14 @@ public class PlayerController : MonoBehaviour
         {
             PlayerHealth.Value = m_HealthScript.CurrentHP;
         }
+    }
+    private void updatePositionReference()
+    {
 
-
+        if (PlayerPos != null)
+        {
+            PlayerPos.Value = transform.position;
+        }
     }
 
     private void Flip()

@@ -6,11 +6,12 @@ public class JumperController : EnemyCommonController
 {
     public float JumpYSpeed;
     public float JumpXSpeed;
+    public float JumpIntervalSeconds;
     public Vector3Variable targetPosition;
     protected override void Start()
     {
         base.Start();
-        InvokeRepeating("jump", 0.0f, 3.0f);
+        InvokeRepeating("jump", 0.0f, JumpIntervalSeconds);
     }
 
     private void jump()

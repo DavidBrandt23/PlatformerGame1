@@ -4,44 +4,101 @@ using UnityEngine;
 
 public class CameraMovement : MonoBehaviour {
 
-    public float leftXBound;
-    public float rightXBound;
+    public CameraSettings camSettings;
+
     private const float cameraWidth = 30.0f;
     private const float cameraHeight = 17.0f;
     private const float xBuffer = 15.0f;
     private const float yBuffer = 5.0f;
-    public Vector3Variable FollowObjectPos;
-    public bool shouldFollowTarget = false;
+    public float maxSpeed = 0.1f;
+
+    public GameEvent StartEvent;
+    public Vector3Variable PositionVariable;
+
     // Use this for initialization
     void Awake () {
 
         // Switch to 640 x 480 full-screen at 60 hz
         //  Screen.SetResolution(480, 270, false, 60);
-        if(FollowObjectPos != null && shouldFollowTarget)
-        {
-            transform.position = FollowObjectPos.Value;
-        }
+        //if(FollowObjectPos != null)
+       // {
+            //transform.position = FollowObjectPos.Value;
+        //}
 
+    }
+    private void Start()
+    {
         Vector3 curPos = transform.position;
         transform.position = new Vector3(curPos.x, curPos.y, -1);
+        updatePositionReference();
+        StartEvent.Raise();
     }
-	
-	// Update is called once per frame
-	void FixedUpdate() {
-        if (FollowObjectPos == null || !shouldFollowTarget)
+
+    public void setCameraSettings(CameraSettings settings)
+    {
+        camSettings.assignSettings(settings);
+    }
+
+    // Update is called once per frame
+    void FixedUpdate() {
+        Vector3 followPos = new Vector3();
+        Transform transform = GetComponent<Transform>();
+        float halfWidth = cameraWidth / 2.0f, halfHeight = cameraHeight / 2.0f;
+        float newX = transform.position.x;
+        float newY = transform.position.y;
+        float minX = camSettings.leftXBound.Value + halfWidth, maxX = camSettings.rightXBound.Value - halfWidth, minY = camSettings.bottomYBound.Value + halfHeight, maxY = camSettings.topYBound.Value - halfHeight;
+        float xOffsetFromTarget, yOffsetFromTarget;
+        float xOffsetFromMinX = newX - minX;
+        float xOffsetFromMaxX = newX - maxX;
+        float yOffsetFromMinY = newY - minY;
+        float yOffsetFromMaxY = newY - maxY;
+
+       // if (FollowObjectPos != null)
+       // {
+            followPos = camSettings.targetPos.Value;
+            xOffsetFromTarget = newX - followPos.x;
+            yOffsetFromTarget = newY - followPos.y;
+        //   }
+        switch (camSettings.CameraMode)
         {
-            return;
+            case 0:
+                return;
+
+            case 1://follow target x exactly but respect x bound, only move y to get to bottom bound, top y bound ignored
+                newX = GetValueJumpToTargetInBounds(followPos.x, minX, maxX);
+
+                //get back in bounds
+                if (yOffsetFromMinY < 0)
+                {
+                    newY += Mathf.Min(maxSpeed, yOffsetFromMinY * -1);
+                }               
+                if (yOffsetFromMinY > 0)
+                {
+                    newY -= Mathf.Min(maxSpeed, yOffsetFromMinY);
+                }
+
+
+                //respect max y
+                //if (yOffsetFromMaxY > 0)
+                //{
+                //    newY -= Mathf.Min(maxSpeed, yOffsetFromMaxY);
+                //}
+                break;
+
+            case 2://follow target x exactly but respect x bound, follow target y up to max speed but respect y bound
+                newX = GetValueJumpToTargetInBounds(followPos.x, minX, maxX);
+                newY = GetValueFollowTargetInBounds(newY, yOffsetFromTarget, yOffsetFromMinY, yOffsetFromMaxY);
+                break;
+            case 3: //move x and y at max speed to target
+                newX = GetValueFollowTargetInBounds(newX, xOffsetFromTarget, xOffsetFromMinX, xOffsetFromMaxX);
+                newY = GetValueFollowTargetInBounds(newY, yOffsetFromTarget, yOffsetFromMinY, yOffsetFromMaxY);
+                break;
         }
 
-        Transform transform = GetComponent<Transform>();
-        
-        Vector3 playerPos = FollowObjectPos.Value;
-        float newX = playerPos.x;
-        float newY = playerPos.y;
+
         //float newX = transform.position.x;
         //float newY = transform.position.y;
 
-        //float halfWidth = cameraWidth / 2.0f, halfHeight = cameraHeight / 2.0f;
 
         //float cameraLeftX = newX - halfWidth;
         //float cameraRightX = newX + halfWidth;
@@ -70,7 +127,6 @@ public class CameraMovement : MonoBehaviour {
 
         //newX = Mathf.Clamp(newX, leftXBound, rightXBound);
 
-        transform.position = new Vector3(newX, newY, transform.position.z);
 
 
 
@@ -89,7 +145,34 @@ public class CameraMovement : MonoBehaviour {
         //position.y = (Mathf.Round(position.y * PPU) / PPU);
 
         //transform.position = position;
+
+
+        transform.position = new Vector3(newX, newY, transform.position.z);
+        updatePositionReference();
     }
+
+    private float GetValueJumpToTargetInBounds(float target, float min, float max)
+    {
+        return Mathf.Clamp(target, min, max);
+    }
+    private float GetValueFollowTargetInBounds(float curCamValue, float yOffsetFromTarget, float yOffsetFromMinY, float yOffsetFromMaxY)
+    {
+        if (yOffsetFromTarget < 0) //target above
+        {
+            curCamValue += Mathf.Min(maxSpeed, yOffsetFromMaxY * -1, yOffsetFromTarget * -1);
+        }
+        if (yOffsetFromTarget > 0)
+        {
+            curCamValue -= Mathf.Min(maxSpeed, yOffsetFromMinY, yOffsetFromTarget);
+        }
+        return curCamValue;
+    }
+
+    private void updatePositionReference()
+    {
+        PositionVariable.Value = transform.position;
+    }
+
     private float distance(float a,float b)
     {
         return Mathf.Abs(a - b);

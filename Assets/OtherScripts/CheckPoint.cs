@@ -9,13 +9,20 @@ public class CheckPoint : MonoBehaviour
     public Sprite touchedFlag;
     private bool isActive = false;
     public AudioClip checkpointNoise;
+    public bool debugStartPos;
     // Start is called before the first frame update
     void Start()
     {
 
         Collideable c = GetComponent<Collideable>();
         c.onCollideDeleage += onCheckPointTouch;
+        if(debugStartPos)
+        {
+            GameObject player = MyGlobal.GetPlayerObject();
+            player.transform.position = transform.position;
+        }
     }
+
     private void onCheckPointTouch(GameObject other)
     {
         if (!isActive && other.tag.Equals("Player"))
@@ -27,6 +34,7 @@ public class CheckPoint : MonoBehaviour
             MyGlobal.PlayGlobalSound(checkpointNoise);
         }
     }
+
     // Update is called once per frame
     void Update()
     {

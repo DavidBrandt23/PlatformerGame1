@@ -11,10 +11,11 @@ public class GameController : MonoBehaviour
     public GameObject gameOverCanvas;
     public GameObject HUD;
     private int bingoCount = 0;
-    public static Vector3? respawnPosition = null;
-    private string currentScene;
     public RuntimeSet_GameObject NonGridBlocks;
     public bool CutsceneMode;
+
+    public static Vector3? respawnPosition = null;
+    private static string currentScene;
 
 
     #region Public stuff
@@ -36,10 +37,12 @@ public class GameController : MonoBehaviour
 
     public void loadLevel(string sceneName)
     {
-
-        SceneManager.LoadScene(sceneName);
-
+        respawnPosition = null;
+        currentScene = sceneName;
+        loadScene(sceneName);
     }
+
+
     public void AddBingoCard()
     {
         bingoCount += 1;
@@ -63,10 +66,6 @@ public class GameController : MonoBehaviour
 
     private void Awake()
     {
-        if (CutsceneMode)
-        {
-            SetHUDVisibility(false);
-        }
     }
 
 
@@ -74,36 +73,61 @@ public class GameController : MonoBehaviour
     {
         pauseCanvas.SetActive(false);
         paused = false;
-       // DontDestroyOnLoad(gameObject);
+
         SceneManager.sceneLoaded += OnSceneLoaded;
         string startScene = "Level1";
-        //startScene = "Cutscene_Opening";
+
         currentScene = startScene;
         LevelMap.GetLevelMapObject().onLoadLevel();
-        if (SceneManager.GetActiveScene().name.Equals(startScene))
+
+        
+        if (CutsceneMode)
         {
-           // LevelMap.GetLevelMapObject().onLoadLevel();
+            SetHUDVisibility(false);
+        }
+
+        string sceneName = SceneManager.GetActiveScene().name;
+        if (sceneName.Equals(currentScene))
+        {
+            //samescene
+            // LevelMap.GetLevelMapObject().onLoadLevel();
+           // MyGlobal.GetPlayerObject().transform.position = (Vector3)respawnPosition;
         }
         else
         {
-           // loadLevel(startScene);
+
+            currentScene = sceneName;
+           // respawnPosition = null;
         }
-        
+
     }
 
     private void respawn()
     {
-        loadLevel(currentScene);
+        loadScene(currentScene);
     }
+
+    private void loadScene(string sceneName)
+    {
+        SceneManager.LoadScene(sceneName);
+    }
+
     private void OnSceneLoaded(Scene aScene, LoadSceneMode aMode)
     {
         LevelMap.GetLevelMapObject().onLoadLevel();
-        //gameOverCanvas.SetActive(false);
-        if (respawnPosition != null)
-        {
-           MyGlobal.GetPlayerObject().transform.position = (Vector3)respawnPosition;
-
-        }
+       // gameOverCanvas.SetActive(false);
+        //if (!CutsceneMode && (respawnPosition != null))
+        //{
+        //    if (!aScene.name.Equals(currentScene))
+        //    {
+        //        currentScene = aScene.name;
+        //        respawnPosition = null;
+        //    }
+        //    else
+        //    {
+        //        MyGlobal.GetPlayerObject().transform.position = (Vector3)respawnPosition;
+        //    }
+        //}
     }
 
     private void Update()
