@@ -4,11 +4,13 @@ using System.Collections;
 public class EventRaiser : MonoBehaviour
 {
     public GameEvent gameEvent;
+    public float delaySeconds = 0.0f;
     private void OnEnable()
     {
-        gameEvent.Raise();
-        
+        Invoke("raise", delaySeconds);
     }
-
-
+    private void raise()
+    {
+        gameEvent.Raise();
+    }
 }

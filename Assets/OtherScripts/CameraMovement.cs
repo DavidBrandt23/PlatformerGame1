@@ -87,11 +87,15 @@ public class CameraMovement : MonoBehaviour {
 
             case 2://follow target x exactly but respect x bound, follow target y up to max speed but respect y bound
                 newX = GetValueJumpToTargetInBounds(followPos.x, minX, maxX);
-                newY = GetValueFollowTargetInBounds(newY, yOffsetFromTarget, yOffsetFromMinY, yOffsetFromMaxY);
+                newY = GetValueFollowTargetInBounds(newY, yOffsetFromTarget, yOffsetFromMinY, yOffsetFromMaxY, maxSpeed);
                 break;
             case 3: //move x and y at max speed to target
-                newX = GetValueFollowTargetInBounds(newX, xOffsetFromTarget, xOffsetFromMinX, xOffsetFromMaxX);
-                newY = GetValueFollowTargetInBounds(newY, yOffsetFromTarget, yOffsetFromMinY, yOffsetFromMaxY);
+                newX = GetValueFollowTargetInBounds(newX, xOffsetFromTarget, xOffsetFromMinX, xOffsetFromMaxX, maxSpeed);
+                newY = GetValueFollowTargetInBounds(newY, yOffsetFromTarget, yOffsetFromMinY, yOffsetFromMaxY,maxSpeed);
+                break;
+            case 4: //fixed on position
+                newX = GetValueFollowTargetInBounds(newX, xOffsetFromTarget, xOffsetFromMinX, xOffsetFromMaxX,99999.0f);
+                newY = GetValueFollowTargetInBounds(newY, yOffsetFromTarget, yOffsetFromMinY, yOffsetFromMaxY, 99999.0f);
                 break;
         }
 
@@ -155,15 +159,15 @@ public class CameraMovement : MonoBehaviour {
     {
         return Mathf.Clamp(target, min, max);
     }
-    private float GetValueFollowTargetInBounds(float curCamValue, float yOffsetFromTarget, float yOffsetFromMinY, float yOffsetFromMaxY)
+    private float GetValueFollowTargetInBounds(float curCamValue, float yOffsetFromTarget, float yOffsetFromMinY, float yOffsetFromMaxY,float maxSpeedForMove)
     {
         if (yOffsetFromTarget < 0) //target above
         {
-            curCamValue += Mathf.Min(maxSpeed, yOffsetFromMaxY * -1, yOffsetFromTarget * -1);
+            curCamValue += Mathf.Min(maxSpeedForMove, yOffsetFromMaxY * -1, yOffsetFromTarget * -1);
         }
         if (yOffsetFromTarget > 0)
         {
-            curCamValue -= Mathf.Min(maxSpeed, yOffsetFromMinY, yOffsetFromTarget);
+            curCamValue -= Mathf.Min(maxSpeedForMove, yOffsetFromMinY, yOffsetFromTarget);
         }
         return curCamValue;
     }

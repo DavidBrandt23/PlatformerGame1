@@ -10,22 +10,34 @@ public class CameraTrigger : MonoBehaviour
     public GameObject camera; //must have camera movement
     private CameraMovement cameraMoveScript;
     public CameraSettings camSettings;
+    public bool setOnEnable;
     private void Start()
     {
-        cameraMoveScript = camera.GetComponent<CameraMovement>();
     }
     void OnEnable()
     {
-        GetComponent<Collideable>().onCollideDeleage += setCameraSettings;
+        cameraMoveScript = camera.GetComponent<CameraMovement>();
+        if (setOnEnable)
+        {
+            setCameraSettings(null);
+        }
+        else
+        {
+            GetComponent<Collideable>().onCollideDeleage += setCameraSettings;
+        }
     }
     void OnDisable()
     {
+        if (setOnEnable)
+        {
+            return;
+        }
         GetComponent<Collideable>().onCollideDeleage -= setCameraSettings;
     }
 
     private void setCameraSettings(GameObject other)
     {
-        if(other.tag == "Player")
+        if(other == null || (other.tag == "Player"))
         {
             cameraMoveScript.setCameraSettings(camSettings);
         }

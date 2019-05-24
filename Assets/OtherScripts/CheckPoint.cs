@@ -20,6 +20,13 @@ public class CheckPoint : MonoBehaviour
         {
             GameObject player = MyGlobal.GetPlayerObject();
             player.transform.position = transform.position;
+            player.transform.position = transform.position;
+
+            GameObject cam = GameObject.Find("MainCamera");
+            if(cam!= null)
+            {
+                cam.transform.position = transform.position;
+            }
         }
     }
 

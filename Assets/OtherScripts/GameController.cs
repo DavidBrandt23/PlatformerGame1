@@ -16,6 +16,7 @@ public class GameController : MonoBehaviour
 
     public static Vector3? respawnPosition = null;
     private static string currentScene;
+    public GameEvent EventSkipToNextLevel;
 
 
     #region Public stuff
@@ -109,7 +110,15 @@ public class GameController : MonoBehaviour
 
     private void loadScene(string sceneName)
     {
-        SceneManager.LoadScene(sceneName);
+        if(sceneName.Length != 0)
+        {
+
+            SceneManager.LoadScene(sceneName);
+        }
+        else
+        {
+            Debug.Log("tried to load blank scene name");
+        }
     }
 
     private void OnSceneLoaded(Scene aScene, LoadSceneMode aMode)
@@ -145,6 +154,12 @@ public class GameController : MonoBehaviour
             {
                 UnPause();
             }
+        }
+        
+        bool skipLevel = CrossPlatformInputManager.GetButton("SkipLevel");
+        if (skipLevel)
+        {
+            EventSkipToNextLevel.Raise();
         }
     }
     private void onPause()
