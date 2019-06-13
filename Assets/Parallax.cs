@@ -19,13 +19,14 @@ public class Parallax : MonoBehaviour
 
     public void setInitialOffset()
     {
-        initialPlayerPos = targetPosition.Value;
+        //  initialPlayerPos = targetPosition.Value;
+        initialPlayerPos = new Vector3(28.5f, 18.5f, -1.0f);
     }
 
     // Update is called once per frame
     void Update()
     {
-        float speed = 0.0f; //0.7
+        float speed = 0.5f; //0.7
         float newX = (initialPlayerPos.x - targetPosition.Value.x)*-speed + initialPos.x;
 
         Vector3 newPos = transform.position;

@@ -73,6 +73,7 @@ public class PlayerController : MonoBehaviour
     }
     private void onDeath()
     {
+        PlayerHealth.Value = m_HealthScript.CurrentHP;
         this.gameObject.SetActive(false);
         this.enabled = false;
         this.GetComponent<SpriteRenderer>().enabled = false;

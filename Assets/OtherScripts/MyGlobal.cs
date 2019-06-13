@@ -593,7 +593,7 @@ public class MyGlobal : MonoBehaviour
 
     private static RectPoints BoxColliderPoints(Vector2 transformPos, BoxCollider2D boxCollider)
     {
-        return BoxColliderPointsNoComp(transformPos, boxCollider.size.x, boxCollider.size.y, boxCollider.offset.x, boxCollider.offset.x);
+        return BoxColliderPointsNoComp(transformPos, boxCollider.size.x, boxCollider.size.y, boxCollider.offset.x, boxCollider.offset.y);
     }
 
     private static RectPoints BoxColliderPointsNoComp(Vector2 transformPos, float width, float height, float offsetX = 0.0f, float offsetY = 0.0f)

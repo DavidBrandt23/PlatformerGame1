@@ -6,6 +6,8 @@ public class ZombieController : EnemyCommonController
 {
     private int xMoveDir = -1;
     public float speed;
+    public bool turnAtEdge;
+    
     // Start is called before the first frame update
     protected override void Start()
     {
@@ -23,15 +25,17 @@ public class ZombieController : EnemyCommonController
         bool hitTileX = false, hitTileY = false;
         m_BasicMovement.setVelocityX(speed * xMoveDir);
         m_BasicMovement.Move(ref hitTileX, ref hitTileY, false);
-        bool facingEdge = MyGlobal.facingEdge(transform.position, m_BoxCollider, xMoveDir);
-        if (facingEdge || hitTileX)
-        {
-            FlipXMoveDir();
-        }
+
+            bool facingEdge = MyGlobal.facingEdge(transform.position, m_BoxCollider, xMoveDir);
+            if ((turnAtEdge && facingEdge) || hitTileX)
+            {
+                FlipXMoveDir();
+            }
+        
 
         //flip sprite to face move direction
         Vector3 theScale = transform.localScale;
-        theScale.x = xMoveDir;
+        theScale.x = -1 * xMoveDir;
         transform.localScale = theScale;
     }
 }

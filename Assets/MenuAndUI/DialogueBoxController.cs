@@ -16,6 +16,7 @@ public class DialogueBoxController : MonoBehaviour
     private const float textSpeed = 0.5f;
     private DialogScript currentScript;
     public GameObject arrow;
+    public AudioClip TextBoop;
     
     // Start is called before the first frame update
     void Start()
@@ -41,7 +42,7 @@ public class DialogueBoxController : MonoBehaviour
         {
             currentScript.OnDialogComplete.Invoke();
             currentScript = null;
-            enabled = false;
+            gameObject.SetActive(false);
             return;
         }
         //setTextToCurrentMessage();
@@ -51,12 +52,14 @@ public class DialogueBoxController : MonoBehaviour
         currentScript = s;
         currentMessage = 0;
         textTimer = 0.0f;
+        prevNumLetters = 0;
     }
 
     private void setTextToCurrentMessage()
     {
     }
 
+    private int prevNumLetters = 0;
     private string getDisplayMessage()
     {
         if (currentScript == null || (currentScript.getNumLines() <= currentMessage))
@@ -67,20 +70,61 @@ public class DialogueBoxController : MonoBehaviour
         string transEnd = "</color>";
         string baseMessage = currentScript.getLines(currentMessage);
         int numLetters = Math.Min((int)textTimer, baseMessage.Length);
+        if(numLetters > prevNumLetters)
+        {
+            MyGlobal.PlayGlobalSound(TextBoop);
+        }
+        prevNumLetters = numLetters;
         return baseMessage.Substring(0, numLetters) + transStart + baseMessage.Substring(numLetters, baseMessage.Length - (numLetters)) + transEnd;
     }
 
+    private string getSpeakerName()
+    {
+        if (currentScript == null)
+        {
+            return "";
+        }
+        return currentScript.getSpeakerName(currentMessage);
+    }
+    
+
+
     public bool readyToAdvance()
     {
+        if(currentScript == null)
+        {
+            return true;
+        }
         return (textTimer > currentScript.getLines(currentMessage).Length);
     }
 
     private void FixedUpdate()
     {
+        if(currentScript == null)
+        {
+            return;
+        }
         textTimer += textSpeed;
-        speakerText.text = currentScript.getSpeakerName(currentMessage);
+        speakerText.text = getSpeakerName();
         mainText.text = getDisplayMessage();
         arrow.SetActive(readyToAdvance());
+        if (readyToAdvance())
+        {
+            TalkAnimation ta = currentScript.getSpeakerScript(currentMessage);
+            if(ta != null)
+            {
+                ta.setTalking(false);
+            }
+        }
+        else
+        {
+            //not ended
+            TalkAnimation ta = currentScript.getSpeakerScript(currentMessage);
+            if (ta != null)
+            {
+                ta.setTalking(true);
+            }
+        }
     }
 
     // Update is called once per frame

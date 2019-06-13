@@ -11,10 +11,12 @@ public class DialogScript : MonoBehaviour
     [SerializeField]
     private List<GameObject> speakers;
     [SerializeField]
+    private List<TalkAnimation> speakerAnimScripts;
+    [SerializeField]
     private List<StringReference> speakerNames;
 
     public UnityEvent OnDialogComplete;
-
+    
     public int getNumLines()
     {
         return lines.Count;
@@ -37,10 +39,18 @@ public class DialogScript : MonoBehaviour
     }
     public string getSpeakerName(int i)
     {
-        if (i >= speakerNames.Count)
+        if ((speakerNames == null) || (i >= speakerNames.Count))
         {
             return "name not found";
         }
         return speakerNames[i].Value;
+    }
+    public TalkAnimation getSpeakerScript(int i)
+    {
+        if ((speakerAnimScripts == null) || (i >= speakerAnimScripts.Count))
+        {
+            return null;
+        }
+        return speakerAnimScripts[i];
     }
 }

@@ -35,7 +35,10 @@ public class GameController : MonoBehaviour
         gameOverCanvas.SetActive(true);
         Invoke("respawn", 3.0f);
     }
-
+    public bool HasCheckPoint()
+    {
+        return (respawnPosition != null);
+    }
     public void loadLevel(string sceneName)
     {
         respawnPosition = null;

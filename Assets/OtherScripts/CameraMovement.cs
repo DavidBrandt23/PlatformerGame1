@@ -151,7 +151,8 @@ public class CameraMovement : MonoBehaviour {
         //transform.position = position;
 
 
-        transform.position = new Vector3(newX, newY, transform.position.z);
+       // transform.position = new Vector3(newX, newY, transform.position.z);
+        transform.position = new Vector3(newX, newY, -1);
         updatePositionReference();
     }
 

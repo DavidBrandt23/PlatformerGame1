@@ -109,7 +109,11 @@ public class HealthScript : MonoBehaviour {
         {
             invuln = true;
             curInvulnTime = InvulnTime;
-            onHurtDelegate();
+            if(onHurtDelegate!= null)
+            {
+
+                onHurtDelegate();
+            }
         }
     }
 

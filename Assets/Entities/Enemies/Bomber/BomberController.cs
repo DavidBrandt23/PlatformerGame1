@@ -48,7 +48,7 @@ public class BomberController : EnemyCommonController
     private void FixedUpdate()
     {
         bool hitTileX = false, hitTileY = false;
-        m_BasicMovement.setVelocityX(xDir * 0.1f);
+        m_BasicMovement.setVelocityX(xDir * 0.07f);
         m_BasicMovement.Move(ref hitTileX, ref hitTileY);
 
         //flip sprite to face move direction
