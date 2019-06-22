@@ -49,6 +49,7 @@ public class DialogueBoxController : MonoBehaviour
     }
     public void StartDialog(DialogScript s)
     {
+        gameObject.SetActive(true);
         currentScript = s;
         currentMessage = 0;
         textTimer = 0.0f;

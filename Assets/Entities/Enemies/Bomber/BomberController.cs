@@ -6,6 +6,7 @@ public class BomberController : EnemyCommonController
 {
     public GameObject bulletPrefab;
     Vector3 bulletSourcePos;
+    public AudioClip shootNoise;
 
     private int xDir;
     // Start is called before the first frame update
@@ -37,7 +38,7 @@ public class BomberController : EnemyCommonController
         bulletSourcePos = transform.Find("BulletSource").transform.position;
         GameObject newBullet = MyGlobal.AddEntityToScene(bulletPrefab, bulletSourcePos);
         newBullet.GetComponent<BulletMove>().direction = direction;
-        // m_AudioSource.PlayOneShot(shootNoise);
+        MyGlobal.PlayGlobalSound(shootNoise);
         Invoke("Shoot", 3.0f);
     }
     // Update is called once per frame

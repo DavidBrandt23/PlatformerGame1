@@ -14,6 +14,8 @@ public class GameController : MonoBehaviour
     public RuntimeSet_GameObject NonGridBlocks;
     public bool CutsceneMode;
 
+    public GameObject ChatBox;
+
     public static Vector3? respawnPosition = null;
     private static string currentScene;
     public GameEvent EventSkipToNextLevel;
@@ -24,7 +26,20 @@ public class GameController : MonoBehaviour
     {
         return bingoCount;
     }
+    public void SetChatMode(bool newVal)
+    {
+        ChatBox.SetActive(newVal);
+        List<GameObject> talkObjects = TalkAnimation.TalkerObjects;
 
+        if (talkObjects != null)
+        {
+            foreach (GameObject ob in talkObjects)
+            {
+                ob.GetComponent<TalkAnimation>().setTalkModeEnabled(newVal);
+            }
+        }
+        SetHUDVisibility(!newVal);
+    }
     public List<GameObject> GetNonGridBlocks()
     {
         return NonGridBlocks.Items;

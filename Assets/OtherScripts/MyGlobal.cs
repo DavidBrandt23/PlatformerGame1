@@ -43,14 +43,35 @@ public class MyGlobal : MonoBehaviour
         Vector2 curPosm = new Vector2(position.x, position.y);
 
         RectPoints RP = BoxColliderPoints(curPosm, boxCollider);
-        float worldScreenLeft = 1.0f;
-        float worldScreenRight = 1.0f;
-        if ((RP.left < worldScreenRight && RP.right > worldScreenLeft) || 
-            (RP.left < worldScreenRight && RP.right > worldScreenLeft))
-        {
-            return true;
-        }
-        return false;
+        Bounds camBounds = OrthographicBounds(GameObject.Find(mainCameraName).GetComponent<Camera>());
+        return BoundIntersect2D(camBounds,boxCollider.bounds);
+        //float worldScreenLeft = 1.0f;
+        //float worldScreenRight = 1.0f;
+        //if ((RP.left < worldScreenRight && RP.right > worldScreenLeft) || 
+        //    (RP.left < worldScreenRight && RP.right > worldScreenLeft))
+        //{
+        //    return true;
+        //}
+        //return false;
+    }
+
+    private static bool BoundIntersect2D(Bounds A, Bounds B)
+    {
+        Bounds AN = A;
+        Bounds BN = B;
+        AN.extents = new Vector3(AN.extents.x, AN.extents.y, 999.0f);
+        BN.extents = new Vector3(BN.extents.x, BN.extents.y, 999.0f);
+        return AN.Intersects(BN);
+    }
+
+    private static Bounds OrthographicBounds(Camera camera)
+    {
+        float screenAspect = (float)Screen.width / (float)Screen.height;
+        float cameraHeight = camera.orthographicSize * 2;
+        Bounds bounds = new Bounds(
+            camera.transform.position,
+            new Vector3(cameraHeight * screenAspect, cameraHeight, 0));
+        return bounds;
     }
 
     public static GameObject GetPlayerObject()
@@ -61,10 +82,26 @@ public class MyGlobal : MonoBehaviour
     {
         return GameObject.Find("GameController");
     }
-    public static void PlayGlobalSound(AudioClip clip)
+    public static void PlayGlobalSoundIfOnScreen(AudioClip clip, float volumeScale = 1.0f, GameObject onlyIfOnCamera = null)
     {
+        playGlobalSound(clip, volumeScale, onlyIfOnCamera);
+    }
+    public static void PlayGlobalSound(AudioClip clip, float volumeScale = 1.0f)
+    {
+        playGlobalSound(clip, volumeScale);
+    }
+
+    private static void playGlobalSound(AudioClip clip, float volumeScale = 1.0f, GameObject onlyIfOnCamera = null)
+    {
+        if(onlyIfOnCamera != null)
+        {
+            if (!ColliderOnCamera(onlyIfOnCamera))
+            {
+                return;
+            }
+        }
         GameObject controller = GameObject.Find("GameController");
-        controller.GetComponent<AudioSource>().PlayOneShot(clip);
+        controller.GetComponent<AudioSource>().PlayOneShot(clip, volumeScale);
     }
     public static void DrawText(Vector3 worldPos, string text)
     {

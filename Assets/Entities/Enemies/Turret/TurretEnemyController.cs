@@ -7,6 +7,8 @@ public class TurretEnemyController : EnemyCommonController
     Vector3 bulletSourcePos;
     public GameObject bulletPrefab;
     public ScriptableObject a;
+    public int facingDir;
+    public AudioClip shootNoise;
     // Start is called before the first frame update
     protected override void Start()
     {
@@ -17,20 +19,21 @@ public class TurretEnemyController : EnemyCommonController
 
     private void Shoot()
     {
-        Vector3 direction = new Vector3(-1, 0, 0);
-        //bool right = m_BasicMovement.GetVelocity().x > 0;
-        //if (right)
-        //{
-        //    direction = new Vector3(1, 0, 0);
-        //}
+        Vector3 direction = new Vector3(facingDir, 0, 0);
+        
         GameObject newBullet = MyGlobal.AddEntityToScene(bulletPrefab, bulletSourcePos);
         newBullet.GetComponent<BulletMove>().direction = direction;
-        // m_AudioSource.PlayOneShot(shootNoise);
+
+        MyGlobal.PlayGlobalSoundIfOnScreen(shootNoise,1.0f,gameObject);
         Invoke("Shoot", 3.0f);
     }
-    // Update is called once per frame
-    void Update()
+
+    void FixedUpdate()
     {
-        
+
+        //flip sprite to face facingDir direction
+        Vector3 theScale = transform.localScale;
+        theScale.x = -1 * facingDir;
+        transform.localScale = theScale;
     }
 }

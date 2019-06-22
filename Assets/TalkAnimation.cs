@@ -9,6 +9,28 @@ public class TalkAnimation : MonoBehaviour
     private const float bounceHeight = 0.15f;
     private float bounceDir = 1.0f;
     private const float bounceSpeed = 0.02f;
+    public List<Behaviour> ThingsToDisable;
+
+    public static List<GameObject> TalkerObjects;
+    private void OnEnable()
+    {
+        if(TalkerObjects == null)
+        {
+            TalkerObjects = new List<GameObject>();
+        }
+        TalkerObjects.Add(this.gameObject);
+    }
+    private void OnDisable()
+    {
+        TalkerObjects.Remove(this.gameObject);
+    }
+    public void setTalkModeEnabled(bool newVal)
+    {
+        foreach( Behaviour b in ThingsToDisable)
+        {
+            b.enabled = !newVal;
+        }
+    }
     public void setTalking(bool newVal)
     {
         if(isTalking == newVal)
