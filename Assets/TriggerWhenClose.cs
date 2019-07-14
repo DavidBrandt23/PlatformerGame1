@@ -16,7 +16,8 @@ public class TriggerWhenClose : MonoBehaviour
     private void FixedUpdate()
     {
         float distance = Mathf.Abs(transform.position.x - otherPos.Value.x);
-        if(distance <= triggerDistance.Value)
+        float yDistance = Mathf.Abs(transform.position.y - otherPos.Value.y);
+        if ((distance <= triggerDistance.Value) && (yDistance <= triggerDistance.Value))
         {
             foreach(Behaviour mb in scriptsToEnable)
             {

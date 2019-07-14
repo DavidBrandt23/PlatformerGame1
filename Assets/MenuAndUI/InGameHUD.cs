@@ -9,11 +9,13 @@ public class InGameHUD : MonoBehaviour
     public IntegerVariable BingoCount;
     public FloatVariable PlayerEnergy;
     private GameObject UIHolder;
+    private GameObject PowerBarUI;
     private bool active = true;
     // Start is called before the first frame update
     void OnEnable()
     {
         UIHolder = GameObject.Find("UIHolder");
+        PowerBarUI = GameObject.Find("PowerBarUI");
     }
     public void SetVisibility(bool visible)
     {
@@ -42,6 +44,18 @@ public class InGameHUD : MonoBehaviour
         {
             GameObject energyText = GameObject.Find("EnergyText");
             energyText.GetComponent<Text>().text = "Energy: " + PlayerEnergy.Value;
+            
+            float curEnergy = PlayerEnergy.Value;
+            bool hasAnyEnergy = curEnergy > 0;
+
+            PowerBarUI.SetActive(hasAnyEnergy);
+
+            if (hasAnyEnergy)
+            {
+                GameObject PowerBarFill = GameObject.Find("PowerBarFill");
+                PowerBarFill.GetComponent<Image>().fillAmount = (curEnergy / 100.0f);
+            }
+
         }
         if (PlayerHealth != null)
         {

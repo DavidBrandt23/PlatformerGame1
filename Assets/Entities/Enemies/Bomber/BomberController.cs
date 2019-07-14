@@ -38,7 +38,7 @@ public class BomberController : EnemyCommonController
         bulletSourcePos = transform.Find("BulletSource").transform.position;
         GameObject newBullet = MyGlobal.AddEntityToScene(bulletPrefab, bulletSourcePos);
         newBullet.GetComponent<BulletMove>().direction = direction;
-        MyGlobal.PlayGlobalSound(shootNoise);
+        MyGlobal.PlayGlobalSoundIfOnScreen(shootNoise, 1.0f, gameObject);
         Invoke("Shoot", 3.0f);
     }
     // Update is called once per frame

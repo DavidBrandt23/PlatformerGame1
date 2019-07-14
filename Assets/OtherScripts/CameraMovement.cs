@@ -10,7 +10,7 @@ public class CameraMovement : MonoBehaviour {
     private const float cameraHeight = 17.0f;
     private const float xBuffer = 15.0f;
     private const float yBuffer = 5.0f;
-    public float maxSpeed = 0.1f;
+    public float maxSpeed = 0.2f;
 
     public GameEvent StartEvent;
     public Vector3Variable PositionVariable;
@@ -91,7 +91,7 @@ public class CameraMovement : MonoBehaviour {
                 break;
             case 3: //move x and y at max speed to target
                 newX = GetValueFollowTargetInBounds(newX, xOffsetFromTarget, xOffsetFromMinX, xOffsetFromMaxX, maxSpeed);
-                newY = GetValueFollowTargetInBounds(newY, yOffsetFromTarget, yOffsetFromMinY, yOffsetFromMaxY,maxSpeed);
+                newY = GetValueFollowTargetInBounds(newY, yOffsetFromTarget, yOffsetFromMinY, yOffsetFromMaxY, maxSpeed);
                 break;
             case 4: //fixed on position
                 newX = GetValueFollowTargetInBounds(newX, xOffsetFromTarget, xOffsetFromMinX, xOffsetFromMaxX,99999.0f);

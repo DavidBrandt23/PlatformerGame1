@@ -57,7 +57,7 @@ public class HealthScript : MonoBehaviour {
     {
         CurrentHP = MaxHP;
         dead = false;
-        InvulnTime = 0.3f;
+        InvulnTime = 0.1f;
         if (customInvulnTime != 0.0f) InvulnTime = customInvulnTime;
     }
 
@@ -80,7 +80,11 @@ public class HealthScript : MonoBehaviour {
 
         CurrentHP -= amount;
         MyGlobal.PlayGlobalSound(hurtNoise);
-        this.GetComponent<Flash>().FlashOnce();
+        Flash flashComp = this.GetComponent<Flash>();
+        if(flashComp != null)
+        {
+            flashComp.FlashOnce();
+        }
         if (CurrentHP <= 0)
         {
             if(!dead)

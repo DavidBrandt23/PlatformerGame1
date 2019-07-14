@@ -24,6 +24,16 @@ TextureImporter:
     21300038: CampRandallTilesheet2_19
     21300040: CampRandallTilesheet2_20
     21300042: CampRandallTilesheet2_21
+    21300044: CampRandallTilesheet2_22
+    21300046: CampRandallTilesheet2_23
+    21300048: CampRandallTilesheet2_24
+    21300050: CampRandallTilesheet2_25
+    21300052: CampRandallTilesheet2_26
+    21300054: CampRandallTilesheet2_27
+    21300056: CampRandallTilesheet2_28
+    21300058: CampRandallTilesheet2_29
+    21300060: CampRandallTilesheet2_30
+    21300062: CampRandallTilesheet2_31
   externalObjects: {}
   serializedVersion: 9
   mipmaps:
@@ -120,7 +130,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6df5c02bf78e7754a9a9ac91d16d1328
+      spriteID: 254e1362812e02f4383093447945221c
       vertices: []
       indices: 
       edges: []
@@ -140,7 +150,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: efc9a18b50c12524c911e53473503367
+      spriteID: 6ee8ea382caca04439b19b938fa2b659
       vertices: []
       indices: 
       edges: []
@@ -160,7 +170,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: cba715a963415dd4db6e5b5ecbf284ab
+      spriteID: 7cff19e47b740fe479c511c861414ab1
       vertices: []
       indices: 
       edges: []
@@ -180,7 +190,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f2b078b2619ef234290d0de3f04f6ee2
+      spriteID: 1f698bf64b09d924795d44e8d01789bf
       vertices: []
       indices: 
       edges: []
@@ -200,13 +210,53 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1f3703ef6b97fbd4fa93d477f1f5900d
+      spriteID: 0ceb4caba70ff5744bfdf1a43089bb95
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
       name: CampRandallTilesheet2_5
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 96
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 72156630da2b4db47b24a57e77fb3325
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CampRandallTilesheet2_6
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 96
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f28eb3377c26fb34c8d3c00c9304d4c8
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CampRandallTilesheet2_7
       rect:
         serializedVersion: 2
         x: 48
@@ -220,13 +270,13 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 958d973f4c3d3cb4aba0cb4fc8b33842
+      spriteID: 562fe95239b793b41b3599ba13277a6a
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: CampRandallTilesheet2_6
+      name: CampRandallTilesheet2_8
       rect:
         serializedVersion: 2
         x: 0
@@ -240,13 +290,13 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e0c1475ad8f32174b98fcc98e8049267
+      spriteID: dfd2a2b0f6f357e4981e98db9e2c6507
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: CampRandallTilesheet2_7
+      name: CampRandallTilesheet2_9
       rect:
         serializedVersion: 2
         x: 16
@@ -260,13 +310,113 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6175ad20a794d734db397652ab43e1cb
+      spriteID: d36a5c174bff41548958d19d092d5f18
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: CampRandallTilesheet2_8
+      name: CampRandallTilesheet2_10
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 80
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fb850430ab720c348b91fa93270bdad0
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CampRandallTilesheet2_11
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 80
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 15ec02c6bc841df4bb5d0fdff95683a8
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CampRandallTilesheet2_12
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 64
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c135864af0f1c1343a9e4daaa3b78d52
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CampRandallTilesheet2_13
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 64
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cac668a34086aa04580e2d38c1b37ef5
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CampRandallTilesheet2_14
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 64
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9c9293ca50737814990fb5e583c80a53
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CampRandallTilesheet2_15
       rect:
         serializedVersion: 2
         x: 48
@@ -280,13 +430,13 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 47cb2abad0a416842be45f01ea066fe6
+      spriteID: 4f2ad1825e22e8f44a6da6e70eabf61d
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: CampRandallTilesheet2_9
+      name: CampRandallTilesheet2_16
       rect:
         serializedVersion: 2
         x: 0
@@ -300,13 +450,13 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 63e3580b2dbf5d14a961e1a56d519388
+      spriteID: 83face53830342f45b2e3c09f0e409e4
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: CampRandallTilesheet2_10
+      name: CampRandallTilesheet2_17
       rect:
         serializedVersion: 2
         x: 16
@@ -320,13 +470,13 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e8226cb37049edb428854a216ebbb5e6
+      spriteID: 546a5477a12614b4e8a376b1dafc3be9
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: CampRandallTilesheet2_11
+      name: CampRandallTilesheet2_18
       rect:
         serializedVersion: 2
         x: 32
@@ -340,13 +490,13 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 527fbfc93e168604cb2322c6340f2931
+      spriteID: 864add2350f921c4f8410cbc2290a959
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: CampRandallTilesheet2_12
+      name: CampRandallTilesheet2_19
       rect:
         serializedVersion: 2
         x: 48
@@ -360,13 +510,13 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3ce13e295b1916b449e1d5a1c270972f
+      spriteID: 7be6a97dc2e924e4c9822d21c2e6787d
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: CampRandallTilesheet2_13
+      name: CampRandallTilesheet2_20
       rect:
         serializedVersion: 2
         x: 0
@@ -380,147 +530,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e0a0e2e7bced67e4a88f4651a94e22c8
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: CampRandallTilesheet2_14
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 16
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 907356eea142c934884dbae10ab06949
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: CampRandallTilesheet2_15
-      rect:
-        serializedVersion: 2
-        x: 16
-        y: 16
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 74f30a88a9dd4b64cb65f2f0a92ecd39
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: CampRandallTilesheet2_16
-      rect:
-        serializedVersion: 2
-        x: 32
-        y: 16
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 2012737053214ee4aaf499f2def86d5c
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: CampRandallTilesheet2_17
-      rect:
-        serializedVersion: 2
-        x: 48
-        y: 16
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 1801349aff3e93e4881149a8f3bfaf93
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: CampRandallTilesheet2_18
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 0
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 9e719121fe61aff479657c0166871680
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: CampRandallTilesheet2_19
-      rect:
-        serializedVersion: 2
-        x: 16
-        y: 0
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 207e037956333474e84852f0733abb8a
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: CampRandallTilesheet2_20
-      rect:
-        serializedVersion: 2
-        x: 32
-        y: 0
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 6564c5accb481344981cade149f96683
+      spriteID: 32f2502342dd4c44abbc9ee113d4d9ea
       vertices: []
       indices: 
       edges: []
@@ -529,6 +539,206 @@ TextureImporter:
       name: CampRandallTilesheet2_21
       rect:
         serializedVersion: 2
+        x: 16
+        y: 32
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6442d7bb128c85c4c949df88c90c3fdd
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CampRandallTilesheet2_22
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 32
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ef819c397b37a294bb9140012dc823a4
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CampRandallTilesheet2_23
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 32
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a4a07a68bb658d840b5823f112ecdf11
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CampRandallTilesheet2_24
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 16
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f1037508bfa0f5045a9f5d772850de06
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CampRandallTilesheet2_25
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 16
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 71c28f727d844b645b4f8c87b1aa9005
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CampRandallTilesheet2_26
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 16
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e8bef3d772638f34e8582192736d8510
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CampRandallTilesheet2_27
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 16
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5a462c93e208c5f438c2e9f588237aa6
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CampRandallTilesheet2_28
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 420006182aef1e6479183ae124fd1a44
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CampRandallTilesheet2_29
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 0
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 01d6dd22849413741bb571cf75a698df
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CampRandallTilesheet2_30
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 0
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b0955c4ce4e6ae9438a158d0fcfd66bd
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CampRandallTilesheet2_31
+      rect:
+        serializedVersion: 2
         x: 48
         y: 0
         width: 16
@@ -540,7 +750,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f9d1ef833260b644ea109560f013d3e2
+      spriteID: 5c2451f6acdde4e45a04f17553714e9e
       vertices: []
       indices: 
       edges: []

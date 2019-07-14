@@ -31,7 +31,7 @@ public class PlayerController : MonoBehaviour
     private float curJumpTime = 0.0f;
     private bool canJumpAgain = true;
     private float energy;
-    private const float maxEnergy = 500.0f;
+    private const float maxEnergy = 100.0f;
     private const float powerShotCost = 10.0f;
     // private bool shooting = false;
 
@@ -52,7 +52,7 @@ public class PlayerController : MonoBehaviour
         m_Flash = GetComponent<Flash>();
         basicShootScript = GameObject.Find("BasicWeapon").GetComponent<PlayerShoot>();
         powerShootScript = GameObject.Find("PowerWeapon").GetComponent<PlayerShoot>();
-        energy = maxEnergy;
+        energy = 0.0f;
         shield = GameObject.Find("PlayerShield");
         shield.SetActive(false);
 
@@ -106,13 +106,19 @@ public class PlayerController : MonoBehaviour
     {
         if (basicShootScript.TryShoot(m_FacingRight))
         {
-            float cooldownTime = 0.3f;
             AnimatorStateInfo animationState = m_Anim.GetCurrentAnimatorStateInfo(0);
             m_Anim.SetFloat("RunAnimPos", animationState.normalizedTime);
             m_Anim.SetLayerWeight(0, 0.0f);
             m_Anim.SetLayerWeight(1, 1.0f);
             m_Anim.SetBool("IsShooting", true);
-            Invoke("shootEnd", cooldownTime);
+
+            const float cooldownTime = 0.5f; //longer than shoot cooldown so gun stays up when mashing 
+            const string shootEndFunction = "shootEnd";
+            if (IsInvoking(shootEndFunction))
+            {
+                CancelInvoke(shootEndFunction);
+            }
+            Invoke(shootEndFunction, cooldownTime);
         }
     }
     public void powerShotPressed()
@@ -133,7 +139,13 @@ public class PlayerController : MonoBehaviour
             m_Anim.SetLayerWeight(0, 0.0f);
             m_Anim.SetLayerWeight(1, 1.0f);
             m_Anim.SetBool("IsShooting", true);
-            Invoke("shootEnd", cooldownTime);
+
+            const string shootEndFunction = "shootEnd";
+            if (IsInvoking(shootEndFunction))
+            {
+                CancelInvoke(shootEndFunction);
+            }
+            Invoke(shootEndFunction, cooldownTime);
         }
     }
 
@@ -142,7 +154,7 @@ public class PlayerController : MonoBehaviour
     {
         if(energy > 0)
         {
-            energy -= 0.10f;
+            energy -= 0.40f;
             shieldOn();
         }
         else
@@ -167,7 +179,7 @@ public class PlayerController : MonoBehaviour
     {
         AnimatorStateInfo animationState = m_Anim.GetCurrentAnimatorStateInfo(0);
         m_Anim.SetFloat("RunAnimPos", animationState.normalizedTime);
-     //   Debug.Log("ENDnormtime" + animationState.normalizedTime);
+
         m_Anim.SetLayerWeight(0, 1.0f);
         m_Anim.SetLayerWeight(1, 0.0f);
         m_Anim.SetBool("IsShooting",false);
@@ -198,9 +210,14 @@ public class PlayerController : MonoBehaviour
             m_BasicMovement.setVelocityX(0);
 
         }
+
         if (running)
         {
-            tryShieldOn();
+            giveEnergy(999.0f);
+        }
+        if (energy > 0)
+        {
+           tryShieldOn();
         }
         else
         {

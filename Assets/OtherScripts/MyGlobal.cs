@@ -93,6 +93,10 @@ public class MyGlobal : MonoBehaviour
 
     private static void playGlobalSound(AudioClip clip, float volumeScale = 1.0f, GameObject onlyIfOnCamera = null)
     {
+        if(clip == null)
+        {
+            return;
+        }
         if(onlyIfOnCamera != null)
         {
             if (!ColliderOnCamera(onlyIfOnCamera))

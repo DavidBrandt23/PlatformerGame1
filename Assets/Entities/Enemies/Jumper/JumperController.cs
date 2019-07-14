@@ -8,10 +8,19 @@ public class JumperController : EnemyCommonController
     public float JumpXSpeed;
     public float JumpIntervalSeconds;
     public Vector3Variable targetPosition;
+
+    private int xDir = -1;
+
     protected override void Start()
     {
         base.Start();
-        InvokeRepeating("jump", 0.0f, JumpIntervalSeconds);
+        InvokeRepeating("jumpAnim", 0.0f, JumpIntervalSeconds);
+        InvokeRepeating("jump", 0.5f, JumpIntervalSeconds);
+    }
+
+    private void jumpAnim()
+    {
+        GetComponent<Animator>().SetTrigger("Jump");
     }
 
     private void jump()
@@ -27,7 +36,7 @@ public class JumperController : EnemyCommonController
         }
 
         bool moveRight = (targetPosition.Value.x - transform.position.x) > 1;
-        float xDir = moveRight ? 1.0f : -1.0f;
+        xDir = moveRight ? 1 : -1;
         m_BasicMovement.setVelocityX(JumpXSpeed * xDir);
         m_BasicMovement.setVelocityY(JumpYSpeed);
     }
@@ -36,10 +45,20 @@ public class JumperController : EnemyCommonController
 
         bool hitTileX = false, hitTileY = false;
         m_BasicMovement.Move(ref hitTileX, ref hitTileY);
-        if(hitTileX || hitTileY)
+        if (hitTileX || hitTileY)
         {
 
             m_BasicMovement.setVelocityX(0.0f);
         }
+        faceDirection();
+    }
+
+    private void faceDirection()
+    {
+
+        //flip sprite to face move direction
+        Vector3 theScale = transform.localScale;
+        theScale.x = xDir * -1;
+        transform.localScale = theScale;
     }
 }

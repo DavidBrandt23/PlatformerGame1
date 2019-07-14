@@ -27,10 +27,22 @@ public class EnemyCommonController : EntityCommonController
     private void onHurt()
     {
         m_Flash.SetIsFlashing(true);
+        if (IsInvoking(stopFlashFunc))
+        {
+            CancelInvoke(stopFlashFunc);
+        }
+        Invoke(stopFlashFunc, 0.3f);
     }
+
+    private const string stopFlashFunc = "stopFlash";
+    private void stopFlash()
+    {
+        m_Flash.SetIsFlashing(false);
+    }
+
 
     private void onInvulnEnd()
     {
-        m_Flash.SetIsFlashing(false);
+       // m_Flash.SetIsFlashing(false);
     }
 }

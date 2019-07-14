@@ -8,7 +8,7 @@ public class ChaserController : EnemyCommonController
     public Vector3Variable targetPos;
 
     private float velocity;
-    private int initialDirection = -1;
+    public int initialDirection = -1;
 
     private const float targetTurnAccel = 0.006f;
 

@@ -118,7 +118,7 @@ public class OnTouch : MonoBehaviour {
             PlayerController pc = other.GetComponent<PlayerController>();
             if (pc != null)
             {
-                pc.giveEnergy(50.0f);
+                pc.giveEnergy(100.0f);
             }
         }
     }

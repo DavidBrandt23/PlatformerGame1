@@ -52,8 +52,13 @@ public class BasicMovement : MonoBehaviour
         setVelocityY(y);
     }
 
+    public void Move()
+    {
+        bool hitTileX = false, hitTileY = false;
+        Move(ref hitTileX, ref hitTileY);
+    }
     //should be called by control scripts FixedUpdate
-    //ignoreGroundHandling will make Move not do the special handling it normally does to make entities "stick" to sloe
+    //ignoreGroundHandling will make Move not do the special handling it normally does to make entities "stick" to slope
     public void Move(ref bool hitTileX, ref bool hitTileY, bool wasOnGround = false)
     {
         if (!ignoreGravity)
