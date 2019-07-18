@@ -13,14 +13,19 @@ public class GameController : MonoBehaviour
     private int bingoCount = 0;
     public RuntimeSet_GameObject NonGridBlocks;
     public bool CutsceneMode;
-
+    public GameObject explodeClusterPrefab;
     public GameObject ChatBox;
 
     public static Vector3? respawnPosition = null;
     private static string currentScene;
     public GameEvent EventSkipToNextLevel;
 
-
+    public void createExplosionCluster(Transform t, float xSize, float ySize)
+    {
+        GameObject newEC = Instantiate(explodeClusterPrefab, t);
+        ExplosionCluster A = newEC.GetComponent<ExplosionCluster>();
+        A.setSize(xSize, ySize);
+    }
     #region Public stuff
     public int GetBingoCount()
     {

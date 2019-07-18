@@ -71,13 +71,22 @@ public class DialogueBoxController : MonoBehaviour
         string transEnd = "</color>";
         string baseMessage = currentScript.getLines(currentMessage);
         int numLetters = Math.Min((int)textTimer, baseMessage.Length);
-        if(numLetters > prevNumLetters)
+        if (numLetters > prevNumLetters)
         {
-            MyGlobal.PlayGlobalSound(TextBoop);
+            if (true || altSound)
+            {
+                MyGlobal.PlayGlobalSound(TextBoop, 0.5f);
+                altSound = false;
+            }
+            else
+            {
+                altSound = true;
+            }
         }
         prevNumLetters = numLetters;
         return baseMessage.Substring(0, numLetters) + transStart + baseMessage.Substring(numLetters, baseMessage.Length - (numLetters)) + transEnd;
     }
+    private bool altSound = false;
 
     private string getSpeakerName()
     {

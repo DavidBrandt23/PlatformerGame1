@@ -23,6 +23,7 @@ public class PlayerShoot : MonoBehaviour
     }
     protected virtual bool CanShoot()
     {
+        return true;
         return offCooldown;
     }
     /// <summary>

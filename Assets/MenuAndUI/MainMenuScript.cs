@@ -16,6 +16,14 @@ public class MainMenuScript : MonoBehaviour
         SceneManager.LoadScene("Cutscene_Opening");
         //ControllerScript.setPauseState(false);
     }
+    public void HelpClicked()
+    {
+       // SceneManager.LoadScene("Menu_LevelSelect");
+    }
+    public void LevelSelectClicked()
+    {
+        SceneManager.LoadScene("Menu_LevelSelect");
+    }
     public void QuitClicked()
     {
         Application.Quit();

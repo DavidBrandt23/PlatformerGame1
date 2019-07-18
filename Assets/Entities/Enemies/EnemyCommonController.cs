@@ -4,7 +4,7 @@ using System.Collections;
 public class EnemyCommonController : EntityCommonController
 {
 
-    private HealthScript m_HealthScript;
+    protected HealthScript m_HealthScript;
     protected override void Start()
     {
         base.Start();

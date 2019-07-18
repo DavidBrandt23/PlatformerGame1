@@ -83,8 +83,9 @@ public class BasicMovement : MonoBehaviour
                 }
             }
         }
-
+        float oldZ = m_Transform.position.z;
         m_Transform.position = MyGlobal.GetValidPosition(m_Transform.position, m_BoxCollider, moveVel, ref hitTileX, ref hitTileY, wasOnGround);
+        m_Transform.position = new Vector3(m_Transform.position.x, m_Transform.position.y, oldZ);
         bool onGround = OnGround();
 
         if (!wasOnGround && onGround && velocity.y < -0.05f)

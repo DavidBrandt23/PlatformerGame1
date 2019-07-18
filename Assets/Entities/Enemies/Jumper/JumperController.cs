@@ -20,7 +20,12 @@ public class JumperController : EnemyCommonController
 
     private void jumpAnim()
     {
-        GetComponent<Animator>().SetTrigger("Jump");
+        Animator a = GetComponent<Animator>();
+        if(a == null)
+        {
+            return;
+        }
+        a.SetTrigger("Jump");
     }
 
     private void jump()

@@ -19,7 +19,11 @@ public class EntityCommonController : MonoBehaviour
         m_Flash = GetComponent<Flash>();
         if (m_Flash == null)
         {
-            m_Flash = gameObject.AddComponent<Flash>();
+            m_Flash = GetComponentInChildren<Flash>();
+            if (m_Flash == null)
+            {
+                m_Flash = gameObject.AddComponent<Flash>();
+            }
         }
 
         m_Collideable = GetComponent<Collideable>();

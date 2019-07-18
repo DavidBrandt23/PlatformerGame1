@@ -8,6 +8,7 @@ public class OnTouch : MonoBehaviour {
     public bool tryDamageOther;
     public bool tryHealOther;
     public int damageAmount;
+    public bool penetrateInvincibility;
     public int healAmount;
     public bool addBingo;
     public bool giveEnergy;
@@ -96,7 +97,7 @@ public class OnTouch : MonoBehaviour {
             HealthScript hs = other.GetComponent<HealthScript>();
             if (hs != null)
             {
-                hs.Damage(damageAmount);
+                hs.Damage(damageAmount, penetrateInvincibility);
             }
         }
     }

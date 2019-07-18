@@ -44,7 +44,10 @@ public class HealthScript : MonoBehaviour {
     {
         return CurrentHP + " / " + MaxHP;
     }
-
+    public bool IsDead()
+    {
+        return CurrentHP <= 0;
+    }
     public delegate void HurtDelegate();
     public HurtDelegate onHurtDelegate;
     public delegate void DeathDelegate();
@@ -71,9 +74,9 @@ public class HealthScript : MonoBehaviour {
         }
     }
 
-    public void Damage(int amount)
+    public void Damage(int amount, bool penetrateInvincibility = false)
     {
-        if (invuln || CannotHurt)
+        if ((!penetrateInvincibility && (invuln || CannotHurt)))
         {
             return;
         }

@@ -82,6 +82,11 @@ public class MyGlobal : MonoBehaviour
     {
         return GameObject.Find("GameController");
     }
+    public static void createExplosionCluster(Transform t, float x, float y)
+    {
+        GameController gc = GetGameControllerObject().GetComponent<GameController>();
+        gc.createExplosionCluster(t, x, y);
+    }
     public static void PlayGlobalSoundIfOnScreen(AudioClip clip, float volumeScale = 1.0f, GameObject onlyIfOnCamera = null)
     {
         playGlobalSound(clip, volumeScale, onlyIfOnCamera);

@@ -42,8 +42,8 @@ public class InGameHUD : MonoBehaviour
 
         if(PlayerEnergy != null)
         {
-            GameObject energyText = GameObject.Find("EnergyText");
-            energyText.GetComponent<Text>().text = "Energy: " + PlayerEnergy.Value;
+            //GameObject energyText = GameObject.Find("EnergyText");
+            //energyText.GetComponent<Text>().text = "Energy: " + PlayerEnergy.Value;
             
             float curEnergy = PlayerEnergy.Value;
             bool hasAnyEnergy = curEnergy > 0;

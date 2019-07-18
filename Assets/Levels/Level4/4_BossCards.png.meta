@@ -14,6 +14,14 @@ TextureImporter:
     21300018: 4_BossCards_9
     21300020: 4_BossCards_10
     21300022: 4_BossCards_11
+    21300024: 4_BossCards_12
+    21300026: 4_BossCards_13
+    21300028: 4_BossCards_14
+    21300030: 4_BossCards_15
+    21300032: 4_BossCards_16
+    21300034: 4_BossCards_17
+    21300036: 4_BossCards_18
+    21300038: 4_BossCards_19
   externalObjects: {}
   serializedVersion: 9
   mipmaps:
@@ -100,7 +108,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 0
+        y: 720
         width: 43
         height: 60
       alignment: 0
@@ -110,7 +118,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2cdf6f0ef7dff9c4894c1af0ba60b16e
+      spriteID: 00906f892d0c5044f8650964a4600244
       vertices: []
       indices: 
       edges: []
@@ -120,7 +128,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 43
-        y: 0
+        y: 720
         width: 43
         height: 60
       alignment: 0
@@ -130,7 +138,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c7b8f13234e2d9345b2a1cf87c2dfb7e
+      spriteID: 6ae56f54d712ec14192ccacff0017ddf
       vertices: []
       indices: 
       edges: []
@@ -140,7 +148,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 86
-        y: 0
+        y: 720
         width: 43
         height: 60
       alignment: 0
@@ -150,7 +158,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 714afee275ab1284c946f05e50ef5c45
+      spriteID: 9e6972e9dca5b5c4889722f721477704
       vertices: []
       indices: 
       edges: []
@@ -160,7 +168,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 129
-        y: 0
+        y: 720
         width: 43
         height: 60
       alignment: 0
@@ -170,7 +178,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6ca07e327b372164c8895dd608b973f2
+      spriteID: 8651ca4d674079147aa4b8f49c9f608c
       vertices: []
       indices: 
       edges: []
@@ -179,8 +187,8 @@ TextureImporter:
       name: 4_BossCards_4
       rect:
         serializedVersion: 2
-        x: 172
-        y: 0
+        x: 0
+        y: 660
         width: 43
         height: 60
       alignment: 0
@@ -190,7 +198,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8a650380fe8b80843ac9494404923c2b
+      spriteID: 5add95fa5c7a18146b707ce3d7cde898
       vertices: []
       indices: 
       edges: []
@@ -199,8 +207,8 @@ TextureImporter:
       name: 4_BossCards_5
       rect:
         serializedVersion: 2
-        x: 215
-        y: 0
+        x: 43
+        y: 660
         width: 43
         height: 60
       alignment: 0
@@ -210,7 +218,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f2ce4f888cf2d9b4c8fc8f1b59dc38a2
+      spriteID: 0f36d5d71625bad4cad555d1091f68db
       vertices: []
       indices: 
       edges: []
@@ -219,8 +227,8 @@ TextureImporter:
       name: 4_BossCards_6
       rect:
         serializedVersion: 2
-        x: 258
-        y: 0
+        x: 86
+        y: 660
         width: 43
         height: 60
       alignment: 0
@@ -230,7 +238,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 424081b5ccd5cbc41a9414e111fe9b0a
+      spriteID: 5cc8aabab69c943489cd6cc0dff4f249
       vertices: []
       indices: 
       edges: []
@@ -239,8 +247,8 @@ TextureImporter:
       name: 4_BossCards_7
       rect:
         serializedVersion: 2
-        x: 301
-        y: 0
+        x: 129
+        y: 660
         width: 43
         height: 60
       alignment: 0
@@ -250,7 +258,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 05d0b07ef7b9e6a46ac01e10acfb7fe3
+      spriteID: 92e430017906d9e4fb0130e1923bffee
       vertices: []
       indices: 
       edges: []
@@ -259,8 +267,8 @@ TextureImporter:
       name: 4_BossCards_8
       rect:
         serializedVersion: 2
-        x: 344
-        y: 0
+        x: 0
+        y: 600
         width: 43
         height: 60
       alignment: 0
@@ -270,7 +278,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 81a8004597185d94a868bf8f2b094501
+      spriteID: 86d158820aef4824a8f948d0d6666e88
       vertices: []
       indices: 
       edges: []
@@ -279,8 +287,8 @@ TextureImporter:
       name: 4_BossCards_9
       rect:
         serializedVersion: 2
-        x: 387
-        y: 0
+        x: 43
+        y: 600
         width: 43
         height: 60
       alignment: 0
@@ -290,7 +298,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: bc7979084ba1366478690310dedbfaab
+      spriteID: 8607c74decf4ad642ac2bd3be3e49551
       vertices: []
       indices: 
       edges: []
@@ -299,8 +307,8 @@ TextureImporter:
       name: 4_BossCards_10
       rect:
         serializedVersion: 2
-        x: 430
-        y: 0
+        x: 86
+        y: 600
         width: 43
         height: 60
       alignment: 0
@@ -310,7 +318,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e8680205c2f77044bb9c3efc76c2355f
+      spriteID: c4742b7e7f1b2ae4aa8bbf2b51e075b2
       vertices: []
       indices: 
       edges: []
@@ -319,8 +327,8 @@ TextureImporter:
       name: 4_BossCards_11
       rect:
         serializedVersion: 2
-        x: 473
-        y: 0
+        x: 129
+        y: 600
         width: 43
         height: 60
       alignment: 0
@@ -330,7 +338,167 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e3c0d3ec348210147a77da5223c2d478
+      spriteID: 54d68e03d8ccd3b4e8617ffac4a80c57
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_BossCards_12
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 540
+        width: 43
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b12081db6cfac944fa3bf41999e9fe6e
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_BossCards_13
+      rect:
+        serializedVersion: 2
+        x: 43
+        y: 540
+        width: 43
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5d0d457d3f05f1a4d9256bdef69fd40b
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_BossCards_14
+      rect:
+        serializedVersion: 2
+        x: 86
+        y: 540
+        width: 43
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 312d1a9fc7d2f374ab6e4f514b6ceec8
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_BossCards_15
+      rect:
+        serializedVersion: 2
+        x: 129
+        y: 540
+        width: 43
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 941ae2437714bc04c88c47e6c84ad895
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_BossCards_16
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 480
+        width: 43
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 52df05da7ed83b4488704f8a121b5415
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_BossCards_17
+      rect:
+        serializedVersion: 2
+        x: 43
+        y: 480
+        width: 43
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 481e157ee4e83e5449d7fbef80e0d2a4
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_BossCards_18
+      rect:
+        serializedVersion: 2
+        x: 86
+        y: 480
+        width: 43
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3503aa873d5a12b4f812aac91dfe2fb9
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_BossCards_19
+      rect:
+        serializedVersion: 2
+        x: 129
+        y: 480
+        width: 43
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f366222bb2ce6b84c9c4f3669d79e0d7
       vertices: []
       indices: 
       edges: []
